@@ -1,11 +1,22 @@
-/**
- * These are the variables used throughout the application. This is where 
- * overwrites that are not specific to components should be maintained.
- */
+// Functions
+.transition (@transition) {
+	-webkit-transition: .2s ease-in-out @transition;  
+	-moz-transition:    .2s ease-in-out @transition;
+	-ms-transition:     .2s ease-in-out @transition; 
+	-o-transition:      .2s ease-in-out @transition;  
+	transition: 		.2s ease-in-out @transition;
+}
 
-/**
- * Typography-related.
- */
+.box-shadow (@valA, @valB, @valC, @color) {
+	-webkit-box-shadow: @valA @valB @valC @color;
+	-moz-box-shadow: @valA @valB @valC @color;
+	-o-box-shadow: @valA @valB @valC @color;
+	box-shadow: @valA @valB @valC @color;
+}
 
-@sansFontFamily: 'Roboto', sans-serif;
-
+.inset-box-shadow (@valA, @valB, @valC, @color) {
+	-webkit-box-shadow: inset @valA @valB @valC @color;
+	-moz-box-shadow: inset @valA @valB @valC @color;
+	-o-box-shadow: inset @valA @valB @valC @color;
+	box-shadow: inset @valA @valB @valC @color;
+}

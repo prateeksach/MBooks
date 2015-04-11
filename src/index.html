@@ -33,65 +33,36 @@
     </script>
   </head>
   <body>
-    <div class="container">
-      <div class="navbar navbar-default">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" ng-init="menuCollapsed = true"
-            ng-click="menuCollapsed = ! menuCollapsed">
+          <button type="button" class="navbar-toggle collapsed" ng-click="toggleNavBarExpansion()">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <div class="navbar-brand">
-            ngbp
-            <small>
-              <a href="http://github.com/ngbp/ngbp/blob/v<%= version %>-release/CHANGELOG.md">
-                v<%= version %>
-              </a>
-            </small>
-          </div>
+          <a class="navbar-brand" ui-sref="home">MBooks</a>
         </div>
-        <div class="collapse navbar-collapse" collapse="menuCollapsed">
-          <ul class="nav navbar-nav">
-            <li ui-sref-active="active">
-              <a href ui-sref="home">
-                <i class="fa fa-home"></i>
-                Home
-              </a>
-            </li>
-            <li ui-sref-active="active">
-              <a href ui-sref="about">
-                <i class="fa fa-info-circle"></i>
-                What is it?
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp#readme">
-                <i class="fa fa-book"></i>
-                Read the Docs
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp">
-                <i class="fa fa-github-alt"></i>
-                Github
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp/issues">
-                <i class="fa fa-comments"></i>
-                Support
-              </a>
-            </li>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" collapse="!navBarExpanded">          
+          <ul class="nav navbar-nav navbar-right">
+            <li><a ng-click="showContactModal()">Contact</a></li>
+            <li><a ng-click="showLoginModal()">Login</a></li>
+            <li><a ng-click="showSignupModal()">Signup</a></li>
           </ul>
         </div>
       </div>
+    </nav>
+
+    <div class="main-container">
+      <div style="height:50px;"></div>
+      <div ui-view="main"></div>
     </div>
 
-    <div class="container" ui-view="main"></div>
-
-    <footer class="footer">
+    <!-- <footer class="footer">
       <div class="container">
         <div class="footer-inner">
           <ul class="social">
@@ -116,6 +87,6 @@
           </p>
         </div>
       </div>
-    </footer>
+    </footer> -->
   </body>
 </html>

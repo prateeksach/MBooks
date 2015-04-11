@@ -1,123 +1,108 @@
-/**
- * This is the main application stylesheet. It should include or import all
- * stylesheets used throughout the application as this is the only stylesheet in
- * the Grunt configuration that is automatically processed.
- */
-
-
-/**
- * First, we include the Twitter Bootstrap LESS files. Only the ones used in the
- * project should be imported as the rest are just wasting space.
- */
-
 @import '../../vendor/bootstrap/less/bootstrap.less';
-
-
-/**
- * This is our main variables file. We must include it last so we can overwrite any variable
- * definitions in our imported stylesheets.
- */
-
 @import 'variables.less';
 
-
-/**
- * Typography
- */
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 300;
+  src: url('../assets/fonts/OpenSans/Light/OpenSans-Light.eot?') format('eot'), url('../assets/fonts/OpenSans/Light/OpenSans-Light.woff') format('woff'), url('../assets/fonts/OpenSans/Light/OpenSans-Light.ttf') format('truetype');
+}
 
 @font-face {
-  font-family: 'Roboto';
-  font-style: normal;
+  font-family: 'Open Sans';
   font-weight: 400;
-  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/Roboto-Regular.woff) format('woff');
+  src: url('../assets/fonts/OpenSans/Regular/OpenSans-Regular.eot?') format('eot'), url('../assets/fonts/OpenSans/Regular/OpenSans-Regular.woff') format('woff'), url('../assets/fonts/OpenSans/Regular/OpenSans-Regular.ttf') format('truetype');
 }
 
-code, pre, .pre {
-  padding: 5px;
-  margin: 10px 0;
-  background-color: #EFEFEF;
-  border: 1px solid #DADADA;
-  border-radius: 3px;
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  src: url('../assets/fonts/OpenSans/Semibold/OpenSans-Semibold.eot?') format('eot'), url('../assets/fonts/OpenSans/Semibold/OpenSans-Semibold.woff') format('woff'), url('../assets/fonts/OpenSans/Semibold/OpenSans-Semibold.ttf') format('truetype');
 }
 
-code {
-  padding: 0 3px;
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 700;
+  src: url('../assets/fonts/OpenSans/Bold/OpenSans-Bold.eot?') format('eot'), url('../assets/fonts/OpenSans/Bold/OpenSans-Bold.woff') format('woff'), url('../assets/fonts/OpenSans/Bold/OpenSans-Bold.ttf') format('truetype');
 }
 
-pre {
-  margin: 10px 0;
-  padding: 5px;
+// Universal
+body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
 }
 
-.page-header {
-  margin-top: 60px;
-
-  &:first-child {
-    margin-top: 20px;
+button, input {
+  &:focus {
+    outline: none;
+    border: none;
   }
 }
 
-h2 {
-  margin: 20px 0;
-  color: #666;
-}
-
-
-/**
- * Navigation
- */
-
-.navbar {
-  margin-top: 20px;
-  
-  small {
-    font-size: 60%;
-  }
-}
-
-
-/**
- * Footer
- */
-
-.footer {
-  margin-top: 80px;
-
-  .footer-inner {
-    padding: 40px 0;
-    border-top: 1px solid #DDD;
-  }
-
-  .social {
-    float: right;
-    margin: 0;
-    list-style: none;
-
-    li {
-      float: left;
-      margin-left: 20px;
-
-      a, a:visited {
-        color: @gray-light;
-        text-decoration: none;
-        font-size: 40px;
-        .transition( 250ms ease-in-out );
-
-        &:hover {
-          color: @gray;
-        }
-      }
-    }
-  }
-}
-
-
-/**
- * Now that all app-wide styles have been applied, we can load the styles for
- * all the submodules and components we are using. 
- *
- * TODO: In a later version of this boilerplate, I'd like to automate this.
- */
 
 @import '../app/home/home.less';
 
+// Nav Bar
+.navbar.navbar-inverse {
+  border: none;
+  background: #3498db;
+
+  .navbar-brand {
+    height: 60px;
+    color: #FFF;
+    padding: 15px 20px;
+    font-size: 25px;
+    line-height: 30px;
+  }
+
+  .navbar-nav > li > a {
+    color: #FFF;
+    padding: 20px;
+  }
+}
+
+// Table Layout
+.table-layout {
+  display: table;
+  height: 100%;
+  width: 100%;
+
+  .cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+// Animations
+.animate-if.ng-enter, .animate-if.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.animate-if.ng-hide-add, .animate-if.ng-hide-remove {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+}
+
+.animate-if.ng-hide-add,
+.animate-if.ng-hide-remove.ng-hide-remove-active {
+  opacity:1;
+}
+
+.animate-if.ng-hide-remove,
+.animate-if.ng-hide-add.ng-hide-add-active {
+  opacity:0;
+}
