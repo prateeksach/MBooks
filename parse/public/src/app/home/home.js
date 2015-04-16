@@ -40,6 +40,7 @@ angular.module( 'ngBoilerplate.home', [
 })
 
 .controller( 'HomeCtrl', function HomeController( $scope, $rootScope, $timeout ) {
+  $scope.showModal = false;
   $scope.bookModal = {visible: false, selectedBook: null}
 
   $scope.searchBooksObj = {query: "", isLoading: false, noResults: false, errorLoading: false, results: []}
@@ -56,14 +57,20 @@ angular.module( 'ngBoilerplate.home', [
   $scope.showBookModal = function(book) {
     $scope.bookModal.selectedBook = book;
     $scope.bookModal.visible = true;
+
+    $scope.showModal = true;
   }
 
-  $scope.hideBookModal = function() {
-    $scope.bookModal.visible = false;
+  $scope.hideModal = function() {
+    $scope.showModal = false;
 
     $timeout(function() {
-      $scope.bookModal.selectedBook = null;
+      $scope.bookModal = {visible: false, selectedBook: null}
     }, 300);
+  }
+
+  $scope.contactSeller = function() {
+
   }
 
   $scope.searchBooks = function() {
@@ -109,6 +116,8 @@ angular.module( 'ngBoilerplate.home', [
       } else {
         $scope.recentBooksObj.noResults = true;
       }
+
+      $scope.bookModal.selectedBook = $scope.recentBooksObj.results[0];
     }, function(error) {
       $scope.recentBooksObj.isLoading = false;
       $scope.recentBooksObj.errorLoading = true;

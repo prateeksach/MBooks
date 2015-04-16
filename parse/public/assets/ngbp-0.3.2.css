@@ -5832,9 +5832,14 @@ body {
   font-weight: 400;
   background: #EFEFEF;
 }
+button,
+input {
+  border: none !important;
+}
 button:focus,
 input:focus {
   outline: none !important;
+  border: none !important;
   box-shadow: none !important;
 }
 .home-page .jumbotron {
@@ -5962,6 +5967,85 @@ input:focus {
   color: #AAA;
   font-size: 12px;
   line-height: 14px;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1050;
+  overflow: scroll;
+}
+.modal-overlay .close-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 25px;
+}
+.modal-overlay .close-container .fa {
+  font-size: 50px;
+  line-height: 100%;
+  cursor: pointer;
+  color: #FFF;
+}
+.modal-overlay .modal-container {
+  margin: 0 auto;
+}
+.modal-overlay .modal-container.view-book-modal {
+  height: 100%;
+  max-height: 600px;
+  width: 85%;
+  max-width: 900px;
+  font-size: 0;
+}
+.modal-overlay .modal-container.view-book-modal > div {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  height: 100%;
+}
+.modal-overlay .modal-container.view-book-modal .book-picture {
+  background-color: #EFEFEF;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.modal-overlay .modal-container.view-book-modal .book-info {
+  position: relative;
+  background: #FFF;
+  border-left: 3px solid #DDD;
+}
+.modal-overlay .modal-container.view-book-modal .book-info .info-header {
+  background: #EFEFEF;
+  padding: 25px;
+  border-bottom: 3px solid #DDD;
+}
+.modal-overlay .modal-container.view-book-modal .book-info .info-header .title {
+  font-size: 22px;
+  line-height: 26px;
+}
+.modal-overlay .modal-container.view-book-modal .book-info .info-header .subtitle {
+  font-size: 18px;
+  line-height: 20px;
+  margin-top: 4px;
+}
+.modal-overlay .modal-container.view-book-modal .book-info .info-content {
+  padding: 25px;
+}
+.modal-overlay .modal-container.view-book-modal .book-info .info-content .text {
+  font-size: 15px;
+  line-height: 22px;
+}
+.modal-overlay .modal-container.view-book-modal .book-info .info-footer {
+  position: absolute;
+  left: 25px;
+  right: 25px;
+  bottom: 25px;
+}
+.modal-overlay .modal-container.view-book-modal .book-info .info-footer button {
+  border-radius: 3px;
 }
 .navbar.navbar-inverse {
   border: none;
