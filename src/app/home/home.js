@@ -40,8 +40,8 @@ angular.module( 'ngBoilerplate.home', [
 })
 
 .controller( 'HomeCtrl', function HomeController( $scope, $rootScope, $timeout ) {
-  $scope.showModal = true;
-  $scope.bookModal = {visible: true, selectedBook: null}
+  $scope.showModal = false;
+  $scope.bookModal = {visible: false, selectedBook: null}
 
   $scope.searchBooksObj = {query: "", isLoading: false, noResults: false, errorLoading: false, results: []}
   $scope.recentBooksObj = {isLoading: false, noResults: false, errorLoading: false, results: []}
@@ -70,7 +70,7 @@ angular.module( 'ngBoilerplate.home', [
   }
 
   $scope.contactSeller = function() {
-    
+
   }
 
   $scope.searchBooks = function() {
