@@ -1,11 +1,13 @@
 // Main Home Page Rules
 .home-page {
+  position: relative;
+
   // Main book background
   .jumbotron {
     background-image: url('images/books.jpg');
     background-position: center center;
     background-size: cover;
-    min-height: 370px;
+    height: 370px;
     margin: 0;
     position: relative;
     color: #FFF;
@@ -53,10 +55,32 @@
     }
   }
 
+   // Loading container
+  .loading-container {
+    position: absolute;
+    top: 370px;
+    left: 0;
+    right: 0;
+    padding: 100px 50px;
+    text-align: center;
+    z-index: 90;
+
+    .fa {
+      font-size: 80px;
+      line-height: 100%;
+    }      
+  }
+
   // Design for books grid
   .book-cards {
     padding-top: 30px;
+    position: absolute;
+    top: 370px;
+    left: 0;
+    right: 0;
+    z-index: 100;
 
+    // Single card
     .book-card {
       .box-shadow(0, 0, 25px, rgba(0,0,0,0.2));
       border-radius: 4px;
@@ -68,6 +92,7 @@
       height: 400px;
       margin-bottom: 30px;
 
+      // Picture on top
       .picture-holder {
         background: #EFEFEF;
         height: 305px;
@@ -117,6 +142,7 @@
         }
       }
 
+      // Information on bottom
       .info-holder {
         position: absolute;
         bottom: 0;
@@ -195,6 +221,7 @@
         height: 100%;
       }
 
+      // Picture on left
       .book-picture {
         background-color: #EFEFEF;
         background-repeat: no-repeat;
@@ -202,6 +229,7 @@
         background-position: center center;
       }
 
+      // Info on right
       .book-info {
         position: relative;
         background: #FFF;
@@ -256,6 +284,7 @@
       width: 400px;
       background: #FFF;
 
+      // Heights for each modal
       &.login-modal {
         height: 378px;
       }

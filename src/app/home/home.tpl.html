@@ -1,4 +1,4 @@
-<div class="modal-overlay animate-if" ng-if="showModal" ng-click="hideSuperModal()">
+<div class="modal-overlay animate-if" ng-show="showModal" ng-click="hideSuperModal()">
   <div class="close-container">
     <i class="fa fa-times"></i>
   </div>
@@ -129,10 +129,16 @@
     </div>
   </div>
 
-  <div class="book-cards">
+  
+
+  <div class="loading-container animate-if" ng-show="searchBooksObj.isLoading || recentBooksObj.isLoading">
+    <i class="fa fa-spinner fa-spin"></i>
+  </div>
+
+  <div class="book-cards animate-if" ng-show="searchBooksObj.results.length && !searchBooksObj.isLoading">
     <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in searchBooksObj.results" ng-if="searchBooksObj.results.length">
+      <div class="row">  
+        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in searchBooksObj.results">
           <div class="book-card" ng-click="showBookModal(book)">
             <div class="picture-holder">
               <div class="picture-overlay">
@@ -153,8 +159,14 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in recentBooksObj.results" ng-if="!searchBooksObj.results.length">
+  <div class="book-cards animate-if" ng-show="!searchBooksObj.results.length && !searchBooksObj.isLoading">
+    <div class="container">
+      <div class="row">  
+        <div class="col-md-3 col-sm-6 col-xs-12 animate-if" ng-repeat="book in recentBooksObj.results">
           <div class="book-card" ng-click="showBookModal(book)">
             <div class="picture-holder">
               <div class="picture-overlay">
