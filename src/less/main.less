@@ -55,7 +55,8 @@ button, input {
 // Nav Bar
 .navbar.navbar-inverse {
   border: none;
-  background: #3498db;
+  background: rgba(0,0,0,0.8);
+  margin: 0;
 
   .navbar-brand {
     height: 60px;
@@ -65,9 +66,22 @@ button, input {
     line-height: 30px;
   }
 
-  .navbar-nav > li > a {
-    color: #FFF;
-    padding: 20px;
+  .navbar-nav > li  {
+    padding: 15px;
+
+    > a {
+      color: #FFF;
+      padding: 5px;
+    }
+
+    &.signup-button {
+      > a {
+        background: #3498db;
+        color: #FFF;
+        border-radius: 3px;
+        padding: 5px 15px;
+      }
+    }
   }
 }
 

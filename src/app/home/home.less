@@ -7,11 +7,13 @@
     background-image: url('images/books.jpg');
     background-position: center center;
     background-size: cover;
-    height: 370px;
+    height: 390px;
     margin: 0;
     position: relative;
     color: #FFF;
     z-index: 0;
+    padding: 30px;
+    padding-top: 80px;
 
     // Black overlay on background
     .overlay {
@@ -55,120 +57,190 @@
     }
   }
 
-   // Loading container
-  .loading-container {
-    position: absolute;
-    top: 370px;
-    left: 0;
-    right: 0;
-    padding: 100px 50px;
-    text-align: center;
-    z-index: 90;
-
-    .fa {
-      font-size: 80px;
-      line-height: 100%;
-    }      
-  }
-
-  // Design for books grid
-  .book-cards {
+  // Main content container
+  .content-container {
     padding-top: 30px;
-    position: absolute;
-    top: 370px;
-    left: 0;
-    right: 0;
-    z-index: 100;
+    position: relative;
 
-    // Single card
-    .book-card {
-      .box-shadow(0, 0, 25px, rgba(0,0,0,0.2));
+    .top-bar {
+      .box-shadow(0, 0, 20px, rgba(0,0,0,0.25));
       border-radius: 4px;
-      background: #FFF;
       overflow: hidden;
       position: relative;
-      z-index: 0;
-      cursor: pointer;
-      height: 400px;
-      margin-bottom: 30px;
+      background: #FFF;
 
-      // Picture on top
-      .picture-holder {
+      .left-button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 180px;
+        font-size: 18px;
+        line-height: 32px;
+        padding: 15px;
+        cursor: pointer;
+        text-align: center;
+        font-weight: 400;
         background: #EFEFEF;
-        height: 305px;
-        position: relative;
-        z-index: -1;
+        color: rgba(0,0,0,.3);
 
-        .picture-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 5;
-          opacity: 0;
-          background: rgba(0,0,0,0.8);
-          color: #FFF;
-          text-align: center;
+        .transition(all);
 
-          .transition(opacity);
-
-          .title {
-            font-size: 60px;
-            font-weight: 300;
-            line-height: 100%;
-          }
-
-          .tip {
-            font-size: 12px;
-            line-height: 100%;
-            margin-top: 10px;
-          }
-        }
-
-        // Hover effect on book card
-        &:hover {
-          .picture-overlay {
-            opacity: 1;
-          }
-        }
-
-        .picture {
-          height: 100%;
-          width: 100%;
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-position: center center;
+        &.active {
+          background: #3498db;
+          color: rgba(255,255,255,1);
         }
       }
 
-      // Information on bottom
-      .info-holder {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 15px;
+      .right-side {
+        padding-left: 180px;
+
+        .search-holder {
+          margin: 0;
+          position: relative;
+
+          .input-holder {
+            input {
+              padding: 20px;
+              font-size: 16px;
+              border-radius: 4px;
+              border: none;
+              width: 100%;
+              color: #000;
+            }
+          }
+
+          button {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            bottom: 6px;
+            padding: 10px 25px;
+            font-size: 18px;
+            line-height: 100%;
+            border-radius: 4px;
+            margin-left: 10px;
+            background: #3498db !important;
+          }
+        }
+      }
+    }
+
+    // Loading container
+    .loading-container {
+      position: absolute;
+      top: 92px;
+      left: 0;
+      right: 0;
+      padding: 100px 50px;
+      text-align: center;
+      z-index: 90;
+
+      .fa {
+        font-size: 80px;
+        line-height: 100%;
+      }      
+    }
+
+    // Design for books grid
+    .book-cards {
+      padding-top: 30px;
+      position: absolute;
+      top: 92px;
+      left: 0;
+      right: 0;
+      z-index: 100;
+
+      // Single card
+      .book-card {
+        .box-shadow(0, 0, 25px, rgba(0,0,0,0.2));
+        border-radius: 4px;
         background: #FFF;
-        .box-shadow(0, 0, 25px, rgba(0,0,0,0.4));
+        overflow: hidden;
+        position: relative;
+        z-index: 0;
+        cursor: pointer;
+        height: 400px;
+        margin-bottom: 30px;
 
-        .title {
-          font-size: 18px;
-          font-weight: 600;
-          line-height: 22px;
+        // Picture on top
+        .picture-holder {
+          background: #FFF;
+          height: 305px;
+          position: relative;
+          z-index: -1;
+
+          .picture-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            opacity: 0;
+            background: rgba(0,0,0,0.8);
+            color: #FFF;
+            text-align: center;
+
+            .transition(opacity);
+
+            .title {
+              font-size: 60px;
+              font-weight: 300;
+              line-height: 100%;
+            }
+
+            .tip {
+              font-size: 12px;
+              line-height: 100%;
+              margin-top: 10px;
+            }
+          }
+
+          // Hover effect on book card
+          &:hover {
+            .picture-overlay {
+              opacity: 1;
+            }
+          }
+
+          .picture {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+          }
         }
 
-        .subtitle {
-          margin-top: 5px;
-          font-size: 15px;
-          line-height: 18px;
-        }
+        // Information on bottom
+        .info-holder {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 15px;
+          background: #FFF;
+          .box-shadow(0, 0, 25px, rgba(0,0,0,0.4));
 
-        .tip {
-          margin-top: 5px;
-          color: #AAA;
-          font-size: 12px;
-          line-height: 14px;
+          .title {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 22px;
+          }
+
+          .subtitle {
+            margin-top: 5px;
+            font-size: 15px;
+            line-height: 18px;
+          }
+
+          .tip {
+            margin-top: 5px;
+            color: #AAA;
+            font-size: 12px;
+            line-height: 14px;
+          }
         }
       }
     }

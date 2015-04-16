@@ -46,16 +46,15 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a>About</a></li>
             <li><a>Contact</a></li>
-            <li><a ng-if="validateUser()">Account</a></li>
-            <li><a ng-click="showLoginModal()" ng-if="!validateUser()">Login</a></li>
-            <li><a ng-click="showSignupModal()" ng-if="!validateUser()">Signup</a></li>
+            <li ng-if="validateUser()"><a>Account</a></li>
+            <li ng-if="!validateUser()"><a ng-click="showLoginModal()">Login</a></li>
+            <li ng-if="!validateUser()" class="signup-button"><a ng-click="showSignupModal()">Signup</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
     <div class="main-container">
-      <div style="height:50px;"></div>
       <div ui-view="main"></div>
     </div>
 
