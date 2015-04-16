@@ -197,6 +197,7 @@ angular.module( 'ngBoilerplate', [
     // Set new variables
     $scope.signupObj.isSigningUp = true;
 
+    // Create new Parse User
     var user = new Parse.User();
     user.set("email", $scope.signupObj.email);
     user.set("username", $scope.signupObj.email);

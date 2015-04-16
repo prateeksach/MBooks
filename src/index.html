@@ -44,10 +44,11 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" collapse="!navBarExpanded">          
           <ul class="nav navbar-nav navbar-right">
-            <li><a ng-click="showContactModal()">About</a></li>
-            <li><a ng-click="showContactModal()">Contact</a></li>
-            <li><a ng-click="showLoginModal()">Login</a></li>
-            <li><a ng-click="showSignupModal()">Signup</a></li>
+            <li><a>About</a></li>
+            <li><a>Contact</a></li>
+            <li><a ng-if="validateUser()">Account</a></li>
+            <li><a ng-click="showLoginModal()" ng-if="!validateUser()">Login</a></li>
+            <li><a ng-click="showSignupModal()" ng-if="!validateUser()">Signup</a></li>
           </ul>
         </div>
       </div>
