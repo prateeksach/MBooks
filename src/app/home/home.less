@@ -1,4 +1,6 @@
+// Main Home Page Rules
 .home-page {
+  // Main book background
   .jumbotron {
     background-image: url('images/books.jpg');
     background-position: center center;
@@ -9,6 +11,7 @@
     color: #FFF;
     z-index: 0;
 
+    // Black overlay on background
     .overlay {
       z-index: -1;
       position: absolute;
@@ -19,6 +22,7 @@
       background: rgba(0,0,0,0.7);
     }
 
+    // Search bar
     .search-holder {
       font-size: 0;
       margin: 0;
@@ -49,8 +53,9 @@
     }
   }
 
+  // Design for books grid
   .book-cards {
-    padding: 50px 0;
+    padding-top: 30px;
 
     .book-card {
       .box-shadow(0, 0, 25px, rgba(0,0,0,0.2));
@@ -96,6 +101,7 @@
           }
         }
 
+        // Hover effect on book card
         &:hover {
           .picture-overlay {
             opacity: 1;
@@ -143,6 +149,7 @@
   }
 }
 
+// Modals
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -153,6 +160,7 @@
   z-index: 1050;
   overflow: scroll;
 
+  // Close button on top right
   .close-container {
     position: absolute;
     top: 0;
@@ -167,9 +175,11 @@
     }
   }
 
+  // Modal content
   .modal-container {
     margin: 0 auto;
 
+    // View Book Modal Rules
     &.view-book-modal {
       height: 100%;
       max-height: 600px;
@@ -235,10 +245,12 @@
       }
     }
 
+    // Sell Book Modal
     &.sell-book-modal {
 
     }
 
+    // Login/Signup Modals
     &.login-signup-modal {
 
     }
