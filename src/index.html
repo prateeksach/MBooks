@@ -26,11 +26,6 @@
 
     <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
-
-    <!-- it's stupid to have to load it here, but this is for the +1 button -->
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
-      { "parsetags": "explicit" }
-    </script>
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -49,6 +44,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" collapse="!navBarExpanded">          
           <ul class="nav navbar-nav navbar-right">
+            <li><a ng-click="showContactModal()">About</a></li>
             <li><a ng-click="showContactModal()">Contact</a></li>
             <li><a ng-click="showLoginModal()">Login</a></li>
             <li><a ng-click="showSignupModal()">Signup</a></li>

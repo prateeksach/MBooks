@@ -1,3 +1,34 @@
+<div class="modal-overlay animate-if" ng-if="showModal" ng-click="hideModal()">
+  <div class="close-container">
+    <i class="fa fa-times"></i>
+  </div>
+
+  <div class="table-layout">
+    <div class="cell">
+      <div class="view-book-modal modal-container" ng-show="bookModal.visible" ng-click="doNothing()" stop-event>
+        <div class="book-picture" back-img="{{bookModal.selectedBook.get('picture').url()}}"></div>
+        <div class="book-info">
+          <div class="info-header">
+            <div class="title">{{bookModal.selectedBook.get('name')}}</div>
+            <div class="subtitle">{{bookModal.selectedBook.get('courseName')}} ({{bookModal.selectedBook.get('courseTaken')}})</div>
+          </div>
+
+          <div class="info-content">
+            <div class="text">ISBN: {{bookModal.selectedBook.get('ISBN')}}</div>
+            <div class="text">Condition: {{bookModal.selectedBook.get('condition')}}</div>
+            <div class="text">Price: ${{bookModal.selectedBook.get('price')}}</div>
+            <div class="text" ng-if="bookModal.selectedBook.get('notes')">Notes: {{bookModal.selectedBook.get('notes')}}</div>
+          </div>
+
+          <div class="info-footer">
+            <button class="btn btn-primary btn-lg btn-block" ng-click="contactSeller()">Inquire About Book</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="home-page">
   <div class="jumbotron">
     <div class="overlay"></div>
@@ -11,11 +42,14 @@
             Have you been using Facebook groups to buy and sell groups? Does it suck? Then, this is what you need. We're a one-stop shop for books at the University of Michigan.
           </p>
 
-          <div class="search-holder">
+          <form class="search-holder" ng-submit="searchBooks()">
             <div class="input-holder">
-              <input type="text" placeholder="Search by book name, course name, ISBN" />
+              <input type="text" placeholder="Search by book name, course name, ISBN" ng-model="searchBooksObj.query" />
             </div>
-          </div>
+            <div class="input-holder button-holder">
+              <button type="submit" ng-click="searchBooks()" class="btn btn-primary btn-lg">Search</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -24,133 +58,28 @@
   <div class="book-cards">
     <div class="container">
       <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="book-card">
+        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in recentBooksObj.results">
+          <div class="book-card" ng-click="showBookModal(book)">
             <div class="picture-holder">
               <div class="picture-overlay">
                 <div class="table-layout">
                   <div class="cell">
-                    <div class="title">$70</div>
-                    <div class="tip">25 Views Today</div>
+                    <div class="title">${{book.get('price')}}</div>
+                    <div class="tip">{{book.get('numViews')}} Views Today</div>
                   </div>
                 </div>
               </div>
-              <div class="picture" style="background-image:url('http://ecx.images-amazon.com/images/I/41-Ky4pFKvL.jpg')"></div>
+              <div class="picture" back-img="{{book.get('picture').url()}}"></div>
             </div>
 
             <div class="info-holder">
-              <div class="title">Linear Algebra with Applications</div>
-              <div class="subtitle">MATH 214 (Fall 2013)</div>
-              <div class="tip">Brand New &bull; Posted 5 days ago</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="book-card">
-            <div class="picture-holder">
-              <div class="picture-overlay">
-                <div class="table-layout">
-                  <div class="cell">
-                    <div class="title">$45</div>
-                    <div class="tip">12 Views Today</div>
-                  </div>
-                </div>
-              </div>
-              <div class="picture" style="background-image:url('http://ecx.images-amazon.com/images/I/51HPG8BdCTL.jpg')"></div>
-            </div>
-
-            <div class="info-holder">
-              <div class="title">Discrete Mathematics and its Applications</div>
-              <div class="subtitle">EECS 203 (Fall 2014)</div>
-              <div class="tip">Like New &bull; Posted 5 days ago</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="book-card">
-            <div class="picture-holder">
-              <div class="picture-overlay">
-                <div class="table-layout">
-                  <div class="cell">
-                    <div class="title">$70</div>
-                    <div class="tip">25 Views Today</div>
-                  </div>
-                </div>
-              </div>
-              <div class="picture" style="background-image:url('http://ecx.images-amazon.com/images/I/51fa7TBpc3L.jpg')"></div>
-            </div>
-
-            <div class="info-holder">
-              <div class="title">A Handbook of Contemporary Spanish Grammar</div>
-              <div class="subtitle">SPANISH 232 (Winter 2015)</div>
-              <div class="tip">Like New &bull; Posted 12 days ago</div>
+              <div class="title">{{book.get('name')}}</div>
+              <div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
+              <div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>  
-
-
-
-<!-- Modal -->
-<div class="modal fade in show">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Sell Book</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-4">
-            <img src="http://ecx.images-amazon.com/images/I/51HPG8BdCTL.jpg" width="100%" height="auto">
-          </div>
-          <div class="col-md-8">
-            <div class="row">
-              <div class="col-md-12">
-                Discrete Mathematics and Its Applications.
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                Edition:
-              </div>
-              <div class="col-md-6">
-                ISBN:
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                Course Edition:
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            $
-          </div>
-          <div class="col-md-8">
-            Condition:
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">Notes:</div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <button type="button" class="btn btn-primary">Submit</button>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+</div> 

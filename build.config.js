@@ -62,11 +62,15 @@ module.exports = {
    */
   vendor_files: {
     js: [
-      'vendor/angular/angular.js',
+      'vendor/angular/angular.min.js',
       'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
       'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
-      'vendor/angular-ui-router/release/angular-ui-router.js',
-      'vendor/angular-ui-utils/modules/route/route.js'
+      'vendor/angular-ui-router/release/angular-ui-router.min.js',
+      'vendor/angular-ui-utils/modules/route/route.js',
+      'vendor/angular-animate/angular-animate.min.js',
+      'src/assets/libs/parse-1.3.5.min.js',
+      'vendor/parse-angular-patch/dist/parse-angular.js',
+      'vendor/momentjs/min/moment.min.js'
     ],
     css: [
     ],

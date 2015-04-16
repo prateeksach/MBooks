@@ -8,7 +8,7 @@ var Book = Parse.Object.extend("Book");
 Parse.Cloud.define("recentBooks", function(request, response) {
 	var query = new Parse.Query(Book);
 	query.equalTo("sold", false);
-	query.addAscending("updatedAt");
+	query.addDescending("updatedAt");
 	query.limit(15);
 
 	query.find({
@@ -29,16 +29,8 @@ Parse.Cloud.define("searchQuery", function(request, response) {
 		return;
 	}
 
-	var query1 = new Parse.Query(Book);
-	query1.contains("name", request.params.query);
-
-	var query2 = new Parse.Query(Book);
-	query2.contains("courseName", request.params.query);
-
-	var query3 = new Parse.Query(Book);
-	query3.contains("ISBN", request.params.query);
-
-	var query = Parse.Query.or(query1, query2, query3);
+	var query = new Parse.Query(Book);
+	query.contains("searchField", request.params.query);
 	query.limit(15);
 
 	query.find({

@@ -20,7 +20,13 @@
     }
 
     .search-holder {
+      font-size: 0;
+      margin: 0;
+
       .input-holder {
+        display: inline-block;
+        vertical-align: top;
+
         input {
           padding: 15px;
           font-size: 16px;
@@ -29,12 +35,21 @@
           width: 600px;
           color: #000;
         }
+
+        &.button-holder {
+          button {
+            padding: 16px 20px;
+            font-size: 18px;
+            line-height: 100%;
+            border-radius: 4px;
+            margin-left: 10px;
+          }
+        }
       }
     }
   }
 
   .book-cards {
-    background: #EFEFEF;
     padding: 50px 0;
 
     .book-card {
@@ -118,6 +133,108 @@
           line-height: 14px;
         }
       }
+    }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 1050;
+  overflow: scroll;
+
+  .close-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 25px;
+
+    .fa {
+      font-size: 50px;
+      line-height: 100%;
+      cursor: pointer;
+      color: #FFF;
+    }
+  }
+
+  .modal-container {
+    margin: 0 auto;
+
+    &.view-book-modal {
+      height: 100%;
+      max-height: 600px;
+      width: 85%;
+      max-width: 900px;
+      font-size: 0;
+
+      > div {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+        height: 100%;
+      }
+
+      .book-picture {
+        background-color: #EFEFEF;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+      }
+
+      .book-info {
+        position: relative;
+        background: #FFF;
+        border-left: 3px solid #DDD;
+
+        .info-header {
+          background: #EFEFEF;
+          padding: 25px;
+          border-bottom: 3px solid #DDD;
+
+          .title {
+            font-size: 22px;
+            line-height: 26px;
+          }
+
+          .subtitle {
+            font-size: 18px;
+            line-height: 20px;
+            margin-top: 4px;
+          }
+        }
+
+        .info-content {
+          padding: 25px;
+
+          .text {
+            font-size: 15px;
+            line-height: 22px;
+          }
+        }
+
+        .info-footer {
+          position: absolute;
+          left: 25px;
+          right: 25px;
+          bottom: 25px;
+
+          button {
+            border-radius: 3px;
+          }
+        }
+      }
+    }
+
+    &.sell-book-modal {
+
+    }
+
+    &.login-signup-modal {
+
     }
   }
 }
