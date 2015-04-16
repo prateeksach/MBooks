@@ -5898,10 +5898,12 @@ input:focus {
   position: relative;
   z-index: 0;
   cursor: pointer;
+  height: 400px;
+  margin-bottom: 30px;
 }
 .home-page .book-cards .book-card .picture-holder {
   background: #EFEFEF;
-  height: 280px;
+  height: 305px;
   position: relative;
   z-index: -1;
 }
@@ -5925,8 +5927,8 @@ input:focus {
   transition: 0.2s ease-in-out opacity;
 }
 .home-page .book-cards .book-card .picture-holder .picture-overlay .title {
-  font-size: 70px;
-  font-size: 300;
+  font-size: 60px;
+  font-weight: 300;
   line-height: 100%;
 }
 .home-page .book-cards .book-card .picture-holder .picture-overlay .tip {
@@ -5945,6 +5947,10 @@ input:focus {
   background-position: center center;
 }
 .home-page .book-cards .book-card .info-holder {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 15px;
   background: #FFF;
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
