@@ -49,12 +49,19 @@ angular.module( 'ngBoilerplate.home', [
   $scope.bookModal = {visible: false, selectedBook: null}
 
   // Objects for recent books and searching
-  $scope.searchBooksObj = {query: "", isLoading: false, noResults: false, errorLoading: false, results: []}
-  $scope.recentBooksObj = {isLoading: false, noResults: false, errorLoading: false, results: []}
+  $scope.searchBooksObj = {visible: false, query: "", isLoading: false, noResults: false, errorLoading: false, results: []}
+  $scope.recentBooksObj = {visible: true, isLoading: false, noResults: false, errorLoading: false, results: []}
 
   // Empty function to avoid event bubbling
   $scope.doNothing = function() {
 
+  }
+
+  // Show all books
+  $scope.showAllBooks = function() {
+    $scope.searchBooksObj.visible = false;
+    $scope.searchBooksObj.query = "";
+    $scope.recentBooksObj.visible = true;
   }
 
   // Format the text for book cards (i.e. "Posted 5 days ago")
@@ -64,6 +71,9 @@ angular.module( 'ngBoilerplate.home', [
 
   // Show a book modal
   $scope.showBookModal = function(book) {
+    // Allow for body scroll
+    $rootScope.bodyScroll = false;
+
     // Assign the book to the modal variable
     $scope.bookModal.selectedBook = book;
     $scope.bookModal.visible = true;
@@ -94,9 +104,14 @@ angular.module( 'ngBoilerplate.home', [
 
     // Stop if empty query
     if($scope.searchBooksObj.query == "") {
+      $scope.showAllBooks();
       $scope.searchBooksObj.results = [];
       return;
     }
+
+    // Show search results
+    $scope.recentBooksObj.visible = false;
+    $scope.searchBooksObj.visible = true;
 
     // Reset variables before starting request
     $scope.searchBooksObj.isLoading = true;

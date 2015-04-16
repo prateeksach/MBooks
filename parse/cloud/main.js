@@ -9,7 +9,10 @@ Parse.Cloud.define("recentBooks", function(request, response) {
 	var query = new Parse.Query(Book);
 	query.equalTo("sold", false);
 	query.addDescending("updatedAt");
-	query.limit(15);
+	query.limit(12);
+
+	if(request.params.skip)
+		query.skip(request.params.skip)
 
 	query.find({
 		useMasterKey: true,
@@ -31,7 +34,10 @@ Parse.Cloud.define("searchQuery", function(request, response) {
 
 	var query = new Parse.Query(Book);
 	query.contains("searchField", request.params.query);
-	query.limit(15);
+	query.limit(12);
+
+	if(request.params.skip)
+		query.skip(request.params.skip)
 
 	query.find({
 		useMasterKey: true,

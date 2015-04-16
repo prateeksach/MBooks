@@ -5830,7 +5830,10 @@ button.close {
 body {
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
-  background: #EFEFEF;
+  background: #e9e9e9;
+}
+body.no-scroll {
+  overflow: hidden;
 }
 a {
   cursor: pointer;
@@ -5845,15 +5848,20 @@ input:focus {
   border: none !important;
   box-shadow: none !important;
 }
+.home-page {
+  position: relative;
+}
 .home-page .jumbotron {
   background-image: url('images/books.jpg');
   background-position: center center;
   background-size: cover;
-  min-height: 370px;
+  height: 390px;
   margin: 0;
   position: relative;
   color: #FFF;
   z-index: 0;
+  padding: 30px;
+  padding-top: 80px;
 }
 .home-page .jumbotron .overlay {
   z-index: -1;
@@ -5864,37 +5872,99 @@ input:focus {
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
 }
-.home-page .jumbotron .search-holder {
-  font-size: 0;
-  margin: 0;
+.home-page .content-container {
+  padding-top: 30px;
+  position: relative;
 }
-.home-page .jumbotron .search-holder .input-holder {
-  display: inline-block;
-  vertical-align: top;
+.home-page .content-container .top-bar {
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  background: #FFF;
 }
-.home-page .jumbotron .search-holder .input-holder input {
+.home-page .content-container .top-bar .left-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 180px;
+  font-size: 18px;
+  line-height: 32px;
   padding: 15px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 400;
+  background: #EFEFEF;
+  color: rgba(0, 0, 0, 0.3);
+  -webkit-transition: all;
+  transition: all;
+  -webkit-transition: 0.2s ease-in-out all;
+  -moz-transition: 0.2s ease-in-out all;
+  -ms-transition: 0.2s ease-in-out all;
+  -o-transition: 0.2s ease-in-out all;
+  transition: 0.2s ease-in-out all;
+}
+.home-page .content-container .top-bar .left-button.active {
+  background: #3498db;
+  color: #ffffff;
+}
+.home-page .content-container .top-bar .right-side {
+  padding-left: 180px;
+}
+.home-page .content-container .top-bar .right-side .search-holder {
+  margin: 0;
+  position: relative;
+}
+.home-page .content-container .top-bar .right-side .search-holder .input-holder input {
+  padding: 20px;
   font-size: 16px;
   border-radius: 4px;
   border: none;
-  width: 600px;
+  width: 100%;
   color: #000;
 }
-.home-page .jumbotron .search-holder .input-holder.button-holder button {
-  padding: 17px 20px;
+.home-page .content-container .top-bar .right-side .search-holder button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  bottom: 6px;
+  padding: 10px 25px;
   font-size: 18px;
   line-height: 100%;
   border-radius: 4px;
   margin-left: 10px;
+  background: #3498db !important;
 }
-.home-page .book-cards {
+.home-page .content-container .loading-container {
+  position: absolute;
+  top: 92px;
+  left: 0;
+  right: 0;
+  padding: 100px 50px;
+  text-align: center;
+  z-index: 90;
+}
+.home-page .content-container .loading-container .fa {
+  font-size: 80px;
+  line-height: 100%;
+}
+.home-page .content-container .book-cards {
   padding-top: 30px;
+  position: absolute;
+  top: 92px;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }
-.home-page .book-cards .book-card {
-  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-  -o-box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+.home-page .content-container .book-cards .book-card {
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
   border-radius: 4px;
   background: #FFF;
   overflow: hidden;
@@ -5904,13 +5974,13 @@ input:focus {
   height: 400px;
   margin-bottom: 30px;
 }
-.home-page .book-cards .book-card .picture-holder {
-  background: #EFEFEF;
+.home-page .content-container .book-cards .book-card .picture-holder {
+  background: #FFF;
   height: 305px;
   position: relative;
   z-index: -1;
 }
-.home-page .book-cards .book-card .picture-holder .picture-overlay {
+.home-page .content-container .book-cards .book-card .picture-holder .picture-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -5929,27 +5999,27 @@ input:focus {
   -o-transition: 0.2s ease-in-out opacity;
   transition: 0.2s ease-in-out opacity;
 }
-.home-page .book-cards .book-card .picture-holder .picture-overlay .title {
+.home-page .content-container .book-cards .book-card .picture-holder .picture-overlay .title {
   font-size: 60px;
   font-weight: 300;
   line-height: 100%;
 }
-.home-page .book-cards .book-card .picture-holder .picture-overlay .tip {
+.home-page .content-container .book-cards .book-card .picture-holder .picture-overlay .tip {
   font-size: 12px;
   line-height: 100%;
   margin-top: 10px;
 }
-.home-page .book-cards .book-card .picture-holder:hover .picture-overlay {
+.home-page .content-container .book-cards .book-card .picture-holder:hover .picture-overlay {
   opacity: 1;
 }
-.home-page .book-cards .book-card .picture-holder .picture {
+.home-page .content-container .book-cards .book-card .picture-holder .picture {
   height: 100%;
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
-.home-page .book-cards .book-card .info-holder {
+.home-page .content-container .book-cards .book-card .info-holder {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -5961,21 +6031,34 @@ input:focus {
   -o-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
 }
-.home-page .book-cards .book-card .info-holder .title {
+.home-page .content-container .book-cards .book-card .info-holder .title {
   font-size: 18px;
   font-weight: 600;
   line-height: 22px;
 }
-.home-page .book-cards .book-card .info-holder .subtitle {
+.home-page .content-container .book-cards .book-card .info-holder .subtitle {
   margin-top: 5px;
   font-size: 15px;
   line-height: 18px;
 }
-.home-page .book-cards .book-card .info-holder .tip {
+.home-page .content-container .book-cards .book-card .info-holder .tip {
   margin-top: 5px;
   color: #AAA;
   font-size: 12px;
   line-height: 14px;
+}
+.close-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 25px;
+  z-index: 1060;
+}
+.close-container .fa {
+  font-size: 50px;
+  line-height: 100%;
+  cursor: pointer;
+  color: #FFF;
 }
 .modal-overlay {
   position: fixed;
@@ -5987,18 +6070,6 @@ input:focus {
   z-index: 1050;
   overflow: scroll;
   padding: 50px 0;
-}
-.modal-overlay .close-container {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 25px;
-}
-.modal-overlay .close-container .fa {
-  font-size: 50px;
-  line-height: 100%;
-  cursor: pointer;
-  color: #FFF;
 }
 .modal-overlay .modal-container {
   margin: 0 auto;
@@ -6062,23 +6133,22 @@ input:focus {
   background: #FFF;
 }
 .modal-overlay .modal-container.login-signup-modal.login-modal {
-  height: 378px;
+  height: 373px;
 }
 .modal-overlay .modal-container.login-signup-modal.signup-modal {
-  height: 722px;
+  height: 717px;
 }
 .modal-overlay .modal-container.login-signup-modal .info-header {
   background: #EFEFEF;
   padding: 25px;
-  border-bottom: 3px solid #DDD;
 }
 .modal-overlay .modal-container.login-signup-modal .info-header .title {
   font-size: 22px;
   line-height: 26px;
 }
 .modal-overlay .modal-container.login-signup-modal .info-header .subtitle {
-  font-size: 18px;
-  line-height: 20px;
+  font-size: 13px;
+  line-height: 17px;
   margin-top: 4px;
 }
 .modal-overlay .modal-container.login-signup-modal .info-header .subtitle .link {
@@ -6109,6 +6179,10 @@ input:focus {
   border: 2px solid #DDD !important;
   color: #000;
 }
+.modal-overlay .modal-container.login-signup-modal .info-content .input-holder.button-holder {
+  margin: 0;
+  margin-top: 15px;
+}
 .modal-overlay .modal-container.login-signup-modal .info-content .input-holder.button-holder button {
   padding: 17px 20px;
   font-size: 18px;
@@ -6124,7 +6198,8 @@ input:focus {
 }
 .navbar.navbar-inverse {
   border: none;
-  background: #3498db;
+  background: rgba(0, 0, 0, 0.9);
+  margin: 0;
 }
 .navbar.navbar-inverse .navbar-brand {
   height: 60px;
@@ -6133,9 +6208,18 @@ input:focus {
   font-size: 25px;
   line-height: 30px;
 }
+.navbar.navbar-inverse .navbar-nav > li {
+  padding: 15px;
+}
 .navbar.navbar-inverse .navbar-nav > li > a {
   color: #FFF;
-  padding: 20px;
+  padding: 5px;
+}
+.navbar.navbar-inverse .navbar-nav > li.signup-button > a {
+  background: #3498db;
+  color: #FFF;
+  border-radius: 3px;
+  padding: 5px 15px;
 }
 .table-layout {
   display: table;
@@ -6148,10 +6232,10 @@ input:focus {
 }
 .animate-if.ng-enter,
 .animate-if.ng-leave {
-  -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
-  -moz-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
-  -o-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
-  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+  -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+  -moz-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+  -o-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
 }
 .animate-if.ng-enter,
 .animate-if.ng-leave.ng-leave-active {
@@ -6163,10 +6247,10 @@ input:focus {
 }
 .animate-if.ng-hide-add,
 .animate-if.ng-hide-remove {
-  -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
-  -moz-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
-  -o-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
-  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+  -webkit-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+  -moz-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+  -o-transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
 }
 .animate-if.ng-hide-add,
 .animate-if.ng-hide-remove.ng-hide-remove-active {

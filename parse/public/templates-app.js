@@ -2,11 +2,11 @@ angular.module('templates-app', ['home/home.tpl.html']);
 
 angular.module("home/home.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("home/home.tpl.html",
-    "<div class=\"modal-overlay animate-if\" ng-if=\"showModal\" ng-click=\"hideSuperModal()\">\n" +
-    "  <div class=\"close-container\">\n" +
-    "    <i class=\"fa fa-times\"></i>\n" +
-    "  </div>\n" +
+    "<div class=\"close-container animate-if\" ng-show=\"showModal\" ng-click=\"hideSuperModal()\">\n" +
+    "  <i class=\"fa fa-times\"></i>\n" +
+    "</div>\n" +
     "\n" +
+    "<div class=\"modal-overlay animate-if\" ng-show=\"showModal\" ng-click=\"hideSuperModal()\">\n" +
     "  <div class=\"table-layout\">\n" +
     "    <div class=\"cell\">\n" +
     "      <div class=\"view-book-modal modal-container\" ng-show=\"bookModal.visible\" ng-click=\"doNothing()\" stop-event>\n" +
@@ -111,71 +111,98 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "  <div class=\"jumbotron\">\n" +
     "    <div class=\"overlay\"></div>\n" +
     "    \n" +
-    "    <div class=\"container\">\n" +
-    "      <div class=\"row\">\n" +
-    "        <div class=\"col-md-9 col-sm-12\">\n" +
-    "          <h1>Find Books on Campus</h1>\n" +
-    "      \n" +
-    "          <p>\n" +
-    "            Have you been using Facebook groups to buy and sell groups? Does it suck? Then, this is what you need. We're a one-stop shop for books at the University of Michigan.\n" +
-    "          </p>\n" +
-    "\n" +
-    "          <form class=\"search-holder\" ng-submit=\"searchBooks()\">\n" +
-    "            <div class=\"input-holder\">\n" +
-    "              <input type=\"text\" placeholder=\"Search by book name, course name, ISBN\" ng-model=\"searchBooksObj.query\" />\n" +
+    "    <div class=\"table-layout\">\n" +
+    "      <div class=\"cell\">\n" +
+    "        <div class=\"container\">\n" +
+    "          <div class=\"row\">\n" +
+    "            <div class=\"col-md-9 col-sm-12\">\n" +
+    "              <h1>Find Books on Campus</h1>\n" +
+    "          \n" +
+    "              <p>\n" +
+    "                Have you been using Facebook groups to buy and sell books? Does it suck? Then, this is what you need. We're a craigslist specifically for books at the University of Michigan.\n" +
+    "              </p>\n" +
     "            </div>\n" +
-    "            <div class=\"input-holder button-holder\">\n" +
-    "              <button type=\"submit\" ng-click=\"searchBooks()\" class=\"btn btn-primary btn-lg\">Search</button>\n" +
-    "            </div>\n" +
-    "          </form>\n" +
+    "          </div>\n" +
     "        </div>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "\n" +
-    "  <div class=\"book-cards\">\n" +
+    "  <div class=\"content-container\">\n" +
     "    <div class=\"container\">\n" +
-    "      <div class=\"row\">\n" +
-    "        <div class=\"col-md-3 col-sm-6 col-xs-12\" ng-repeat=\"book in searchBooksObj.results\" ng-if=\"searchBooksObj.results.length\">\n" +
-    "          <div class=\"book-card\" ng-click=\"showBookModal(book)\">\n" +
-    "            <div class=\"picture-holder\">\n" +
-    "              <div class=\"picture-overlay\">\n" +
-    "                <div class=\"table-layout\">\n" +
-    "                  <div class=\"cell\">\n" +
-    "                    <div class=\"title\">${{book.get('price')}}</div>\n" +
-    "                    <div class=\"tip\">{{book.get('numViews')}} Views Today</div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"picture\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
-    "            </div>\n" +
+    "      <div class=\"row\">  \n" +
+    "        <div class=\"col-md-12\">\n" +
+    "          <div class=\"top-bar\">\n" +
+    "            <div class=\"left-button\" ng-click=\"showAllBooks()\" ng-class=\"{'active':recentBooksObj.visible}\">Show All Books</div>\n" +
     "\n" +
-    "            <div class=\"info-holder\">\n" +
-    "              <div class=\"title\">{{book.get('name')}}</div>\n" +
-    "              <div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
-    "              <div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "            <div class=\"right-side\">\n" +
+    "              <form class=\"search-holder\" ng-submit=\"searchBooks()\">\n" +
+    "                <div class=\"input-holder\">\n" +
+    "                  <input type=\"text\" placeholder=\"Search by book name, course name, ISBN\" ng-model=\"searchBooksObj.query\" />\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <button type=\"submit\" ng-click=\"searchBooks()\" class=\"btn btn-primary btn-lg animate-if\" ng-show=\"searchBooksObj.query || searchBooksObj.visible\">Search</button>\n" +
+    "              </form>\n" +
     "            </div>\n" +
     "          </div>\n" +
     "        </div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
     "\n" +
-    "        <div class=\"col-md-3 col-sm-6 col-xs-12\" ng-repeat=\"book in recentBooksObj.results\" ng-if=\"!searchBooksObj.results.length\">\n" +
-    "          <div class=\"book-card\" ng-click=\"showBookModal(book)\">\n" +
-    "            <div class=\"picture-holder\">\n" +
-    "              <div class=\"picture-overlay\">\n" +
-    "                <div class=\"table-layout\">\n" +
-    "                  <div class=\"cell\">\n" +
-    "                    <div class=\"title\">${{book.get('price')}}</div>\n" +
-    "                    <div class=\"tip\">{{book.get('numViews')}} Views Today</div>\n" +
+    "    <div class=\"loading-container animate-if\" ng-show=\"searchBooksObj.isLoading || recentBooksObj.isLoading\">\n" +
+    "      <i class=\"fa fa-spinner fa-spin\"></i>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"book-cards animate-if\" ng-show=\"searchBooksObj.visible && searchBooksObj.results.length && !searchBooksObj.isLoading\">\n" +
+    "      <div class=\"container\">\n" +
+    "        <div class=\"row\">  \n" +
+    "          <div class=\"col-md-3 col-sm-6 col-xs-12\" ng-repeat=\"book in searchBooksObj.results\">\n" +
+    "            <div class=\"book-card\" ng-click=\"showBookModal(book)\">\n" +
+    "              <div class=\"picture-holder\">\n" +
+    "                <div class=\"picture-overlay\">\n" +
+    "                  <div class=\"table-layout\">\n" +
+    "                    <div class=\"cell\">\n" +
+    "                      <div class=\"title\">${{book.get('price')}}</div>\n" +
+    "                      <div class=\"tip\">{{book.get('numViews')}} Views Today</div>\n" +
+    "                    </div>\n" +
     "                  </div>\n" +
     "                </div>\n" +
+    "                <div class=\"picture\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
     "              </div>\n" +
-    "              <div class=\"picture\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
-    "            </div>\n" +
     "\n" +
-    "            <div class=\"info-holder\">\n" +
-    "              <div class=\"title\">{{book.get('name')}}</div>\n" +
-    "              <div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
-    "              <div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "              <div class=\"info-holder\">\n" +
+    "                <div class=\"title\">{{book.get('name')}}</div>\n" +
+    "                <div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
+    "                <div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "              </div>\n" +
+    "            </div>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"book-cards animate-if\" ng-show=\"recentBooksObj.visible && recentBooksObj.results.length && !recentBooksObj.isLoading\">\n" +
+    "      <div class=\"container\">\n" +
+    "        <div class=\"row\">  \n" +
+    "          <div class=\"col-md-3 col-sm-6 col-xs-12 animate-if\" ng-repeat=\"book in recentBooksObj.results\">\n" +
+    "            <div class=\"book-card\" ng-click=\"showBookModal(book)\">\n" +
+    "              <div class=\"picture-holder\">\n" +
+    "                <div class=\"picture-overlay\">\n" +
+    "                  <div class=\"table-layout\">\n" +
+    "                    <div class=\"cell\">\n" +
+    "                      <div class=\"title\">${{book.get('price')}}</div>\n" +
+    "                      <div class=\"tip\">{{book.get('numViews')}} Views Today</div>\n" +
+    "                    </div>\n" +
+    "                  </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"picture\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
+    "              </div>\n" +
+    "\n" +
+    "              <div class=\"info-holder\">\n" +
+    "                <div class=\"title\">{{book.get('name')}}</div>\n" +
+    "                <div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
+    "                <div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "              </div>\n" +
     "            </div>\n" +
     "          </div>\n" +
     "        </div>\n" +

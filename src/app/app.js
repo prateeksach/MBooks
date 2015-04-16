@@ -89,8 +89,16 @@ angular.module( 'ngBoilerplate', [
     $rootScope.$broadcast("modalHidden");
   }
 
+  // Show sell modal
+  $scope.showSellModal = function() {
+    if(!rootScope.validateUser()) {
+      return;
+    }
+  }
+
   // Show login modal
   $scope.showLoginModal = function() {
+    // Disable body scroll and set variables
     $rootScope.bodyScroll = false;
 
     $scope.loginObj.visible = true;
@@ -100,6 +108,7 @@ angular.module( 'ngBoilerplate', [
 
   // Show signup modal
   $scope.showSignupModal = function() {
+    // Disable body scroll and set variables
     $rootScope.bodyScroll = false;
 
     $scope.signupObj.visible = true;

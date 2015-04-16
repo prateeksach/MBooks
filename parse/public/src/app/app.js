@@ -43,6 +43,9 @@ angular.module( 'ngBoilerplate', [
 
 // Super controller
 .controller( 'AppCtrl', function AppCtrl ( $rootScope, $scope, $location, $timeout ) {
+  // Variable for controlling body scroll when modal is open
+  $rootScope.bodyScroll = true;
+
   // Set rootScope variable for showing modal
   $rootScope.showModal = false;
 
@@ -75,6 +78,7 @@ angular.module( 'ngBoilerplate', [
   // Hide modal
   $scope.hideSuperModal = function() {
     $rootScope.showModal = false;
+    $rootScope.bodyScroll = true;
 
     // Delay before resetting the modal variables to avoid glitches
     $timeout(function() {
@@ -85,8 +89,18 @@ angular.module( 'ngBoilerplate', [
     $rootScope.$broadcast("modalHidden");
   }
 
+  // Show sell modal
+  $scope.showSellModal = function() {
+    if(!rootScope.validateUser()) {
+      return;
+    }
+  }
+
   // Show login modal
   $scope.showLoginModal = function() {
+    // Disable body scroll and set variables
+    $rootScope.bodyScroll = false;
+
     $scope.loginObj.visible = true;
     $scope.signupObj.visible = false;
     $rootScope.showModal = true;
@@ -94,6 +108,9 @@ angular.module( 'ngBoilerplate', [
 
   // Show signup modal
   $scope.showSignupModal = function() {
+    // Disable body scroll and set variables
+    $rootScope.bodyScroll = false;
+
     $scope.signupObj.visible = true;
     $scope.loginObj.visible = false;
     $rootScope.showModal = true;

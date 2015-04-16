@@ -46,6 +46,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a>About</a></li>
             <li><a>Contact</a></li>
+            <li ng-if="validateUser()"><a ng-click="showSellModal()">Sell</a></li>
             <li ng-if="validateUser()"><a>Account</a></li>
             <li ng-if="!validateUser()"><a ng-click="showLoginModal()">Login</a></li>
             <li ng-if="!validateUser()" class="signup-button"><a ng-click="showSignupModal()">Signup</a></li>
