@@ -46,7 +46,6 @@ angular.module( 'ngBoilerplate.home', [
 // Home page controller
 .controller( 'HomeCtrl', function HomeController( $scope, $rootScope, $timeout ) {
   // Modal related variables
-  $scope.showModal = false;
   $scope.bookModal = {visible: false, selectedBook: null}
 
   // Objects for recent books and searching
@@ -69,12 +68,12 @@ angular.module( 'ngBoilerplate.home', [
     $scope.bookModal.selectedBook = book;
     $scope.bookModal.visible = true;
 
-    $scope.showModal = true;
+    $rootScope.showModal = true;
   }
 
   // Hide modal
   $scope.hideModal = function() {
-    $scope.showModal = false;
+    $rootScope.showModal = false;
 
     // Delay before resetting the modal variables to avoid glitches
     $timeout(function() {
@@ -112,6 +111,7 @@ angular.module( 'ngBoilerplate.home', [
       if(list.length) {
         $scope.searchBooksObj.results = list;
       } else {
+        $scope.searchBooksObj.results = [];
         $scope.searchBooksObj.noResults = true;
       }
     }, function(error) {
@@ -140,6 +140,7 @@ angular.module( 'ngBoilerplate.home', [
       if(list.length) {
         $scope.recentBooksObj.results = list;
       } else {
+        $scope.recentBooksObj.results = [];
         $scope.recentBooksObj.noResults = true;
       }
     }, function(error) {
@@ -151,6 +152,11 @@ angular.module( 'ngBoilerplate.home', [
 
   // Load recent books on page load
   $scope.loadRecentBooks();
+
+  // Listen for when modal is hidden from rootScope
+  $scope.$on("modalHidden", function() {
+    $scope.hideModal();
+  })
 })
 
 ;

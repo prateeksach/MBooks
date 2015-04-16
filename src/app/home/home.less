@@ -42,7 +42,7 @@
 
         &.button-holder {
           button {
-            padding: 16px 20px;
+            padding: 17px 20px;
             font-size: 18px;
             line-height: 100%;
             border-radius: 4px;
@@ -159,6 +159,7 @@
   background-color: rgba(0,0,0,0.9);
   z-index: 1050;
   overflow: scroll;
+  padding: 50px 0;
 
   // Close button on top right
   .close-container {
@@ -252,7 +253,77 @@
 
     // Login/Signup Modals
     &.login-signup-modal {
+      width: 400px;
+      background: #FFF;
 
+      &.login-modal {
+        height: 378px;
+      }
+
+      &.signup-modal {
+        height: 722px;
+      }
+
+      .info-header {
+        background: #EFEFEF;
+        padding: 25px;
+        border-bottom: 3px solid #DDD;
+
+        .title {
+          font-size: 22px;
+          line-height: 26px;
+        }
+
+        .subtitle {
+          font-size: 18px;
+          line-height: 20px;
+          margin-top: 4px;
+
+          .link {
+            cursor: pointer;
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .info-content {
+        padding: 15px;
+
+        .label {
+          font-size: 14px;
+          line-height: 100%;
+          margin-bottom: 8px;
+          font-weight: 400;
+          color: #000;
+          padding: 0;
+          display: block;
+          text-align: left;
+        }
+
+        .input-holder {
+          margin-bottom: 10px;
+
+          input {
+            padding: 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            width: 100%;
+            border: 2px solid #DDD !important;
+            color: #000;
+          }
+  
+          &.button-holder {
+            button {
+              padding: 17px 20px;
+              font-size: 18px;
+              line-height: 100%;
+              border-radius: 4px;
+
+              .transition(background);
+            }
+          }
+        }
+      }
     }
   }
 }

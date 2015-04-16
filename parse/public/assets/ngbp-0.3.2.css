@@ -5832,6 +5832,9 @@ body {
   font-weight: 400;
   background: #EFEFEF;
 }
+a {
+  cursor: pointer;
+}
 button,
 input {
   border: none !important;
@@ -5878,14 +5881,14 @@ input:focus {
   color: #000;
 }
 .home-page .jumbotron .search-holder .input-holder.button-holder button {
-  padding: 16px 20px;
+  padding: 17px 20px;
   font-size: 18px;
   line-height: 100%;
   border-radius: 4px;
   margin-left: 10px;
 }
 .home-page .book-cards {
-  padding: 50px 0;
+  padding-top: 30px;
 }
 .home-page .book-cards .book-card {
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
@@ -5983,6 +5986,7 @@ input:focus {
   background-color: rgba(0, 0, 0, 0.9);
   z-index: 1050;
   overflow: scroll;
+  padding: 50px 0;
 }
 .modal-overlay .close-container {
   position: absolute;
@@ -6052,6 +6056,71 @@ input:focus {
 }
 .modal-overlay .modal-container.view-book-modal .book-info .info-footer button {
   border-radius: 3px;
+}
+.modal-overlay .modal-container.login-signup-modal {
+  width: 400px;
+  background: #FFF;
+}
+.modal-overlay .modal-container.login-signup-modal.login-modal {
+  height: 378px;
+}
+.modal-overlay .modal-container.login-signup-modal.signup-modal {
+  height: 722px;
+}
+.modal-overlay .modal-container.login-signup-modal .info-header {
+  background: #EFEFEF;
+  padding: 25px;
+  border-bottom: 3px solid #DDD;
+}
+.modal-overlay .modal-container.login-signup-modal .info-header .title {
+  font-size: 22px;
+  line-height: 26px;
+}
+.modal-overlay .modal-container.login-signup-modal .info-header .subtitle {
+  font-size: 18px;
+  line-height: 20px;
+  margin-top: 4px;
+}
+.modal-overlay .modal-container.login-signup-modal .info-header .subtitle .link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.modal-overlay .modal-container.login-signup-modal .info-content {
+  padding: 15px;
+}
+.modal-overlay .modal-container.login-signup-modal .info-content .label {
+  font-size: 14px;
+  line-height: 100%;
+  margin-bottom: 8px;
+  font-weight: 400;
+  color: #000;
+  padding: 0;
+  display: block;
+  text-align: left;
+}
+.modal-overlay .modal-container.login-signup-modal .info-content .input-holder {
+  margin-bottom: 10px;
+}
+.modal-overlay .modal-container.login-signup-modal .info-content .input-holder input {
+  padding: 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  width: 100%;
+  border: 2px solid #DDD !important;
+  color: #000;
+}
+.modal-overlay .modal-container.login-signup-modal .info-content .input-holder.button-holder button {
+  padding: 17px 20px;
+  font-size: 18px;
+  line-height: 100%;
+  border-radius: 4px;
+  -webkit-transition: background;
+  transition: background;
+  -webkit-transition: 0.2s ease-in-out background;
+  -moz-transition: 0.2s ease-in-out background;
+  -ms-transition: 0.2s ease-in-out background;
+  -o-transition: 0.2s ease-in-out background;
+  transition: 0.2s ease-in-out background;
 }
 .navbar.navbar-inverse {
   border: none;

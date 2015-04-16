@@ -1,4 +1,4 @@
-<div class="modal-overlay animate-if" ng-if="showModal" ng-click="hideModal()">
+<div class="modal-overlay animate-if" ng-if="showModal" ng-click="hideSuperModal()">
   <div class="close-container">
     <i class="fa fa-times"></i>
   </div>
@@ -24,6 +24,80 @@
             <button class="btn btn-primary btn-lg btn-block" ng-click="contactSeller()">Inquire About Book</button>
           </div>
         </div>
+      </div>
+      
+      <div class="login-signup-modal login-modal modal-container" ng-show="loginObj.visible" ng-click="doNothing()" stop-event>
+        <div class="info-header">
+          <div class="title">Login</div>
+          <div class="subtitle">Please login to buy and sell on MBooks. Or <span class="link" ng-click="showSignupModal()">signup</span> if you're not a member yet.</div>
+        </div>
+
+        <form class="info-content" ng-submit="loginUser()">
+          <div class="label">E-Mail</div>
+          <div class="input-holder">
+            <input type="email" ng-model="loginObj.email" />
+          </div>
+
+          <div class="label">Password</div>
+          <div class="input-holder">
+            <input type="password" ng-model="loginObj.password" />
+          </div>
+
+          <div class="input-holder button-holder">
+            <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!loginObj.loginError, 'btn-danger':loginObj.loginError}" ng-click="loginUser()">
+              <span ng-if="!loginObj.isLoggingIn && !loginObj.loginError">Login</span>
+              <span ng-if="loginObj.isLoggingIn">Logging In...</span>
+              <span ng-if="loginObj.loginError">{{loginObj.loginError}}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="login-signup-modal signup-modal modal-container" ng-show="signupObj.visible" ng-click="doNothing()" stop-event>
+        <div class="info-header">
+          <div class="title">Signup</div>
+          <div class="subtitle">Please signup to buy and sell on MBooks. Or <span class="link" ng-click="showLoginModal()">login</span> if you're already a member.</div>
+        </div>
+
+        <form class="info-content" ng-submit="signupUser()">
+          <div class="label">First Name</div>
+          <div class="input-holder">
+            <input type="text" ng-model="signupObj.firstName" />
+          </div>
+
+          <div class="label">Last Name</div>
+          <div class="input-holder">
+            <input type="text" ng-model="signupObj.lastName" />
+          </div>
+
+          <div class="label">Phone Number (not shared without your permission)</div>
+          <div class="input-holder">
+            <input type="text" placeholder="No Dashes" ng-model="signupObj.phone" />
+          </div>
+
+          <div class="label">E-Mail</div>
+          <div class="input-holder">
+            <input type="email" ng-model="signupObj.email" />
+          </div>
+
+          <div class="label">Password</div>
+          <div class="input-holder">
+            <input type="password" ng-model="signupObj.password" />
+          </div>
+
+          <div class="label">Confirm Password</div>
+          <div class="input-holder">
+            <input type="password" ng-model="signupObj.confirm" />
+          </div>
+
+          <div class="input-holder button-holder">
+            <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!signupObj.signupError, 'btn-danger':signupObj.signupError}" ng-click="loginUser()">
+              <span ng-if="!signupObj.isSigningUp && !signupObj.signupError">Signup</span>
+              <span ng-if="signupObj.isSigningUp">Signing Up...</span>
+              <span ng-if="signupObj.signupError">{{signupObj.signupError}}</span>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
