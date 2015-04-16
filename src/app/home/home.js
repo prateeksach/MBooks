@@ -71,6 +71,9 @@ angular.module( 'ngBoilerplate.home', [
 
   // Show a book modal
   $scope.showBookModal = function(book) {
+    // Allow for body scroll
+    $rootScope.bodyScroll = false;
+
     // Assign the book to the modal variable
     $scope.bookModal.selectedBook = book;
     $scope.bookModal.visible = true;

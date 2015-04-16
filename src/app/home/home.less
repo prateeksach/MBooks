@@ -25,36 +25,6 @@
       bottom: 0;
       background: rgba(0,0,0,0.7);
     }
-
-    // Search bar
-    .search-holder {
-      font-size: 0;
-      margin: 0;
-
-      .input-holder {
-        display: inline-block;
-        vertical-align: top;
-
-        input {
-          padding: 15px;
-          font-size: 16px;
-          border-radius: 4px;
-          border: none;
-          width: 600px;
-          color: #000;
-        }
-
-        &.button-holder {
-          button {
-            padding: 17px 20px;
-            font-size: 18px;
-            line-height: 100%;
-            border-radius: 4px;
-            margin-left: 10px;
-          }
-        }
-      }
-    }
   }
 
   // Main content container
@@ -249,7 +219,7 @@
 
 // Modals
 .modal-overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -261,7 +231,7 @@
 
   // Close button on top right
   .close-container {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     padding: 25px;
@@ -358,17 +328,16 @@
 
       // Heights for each modal
       &.login-modal {
-        height: 378px;
+        height: 373px;
       }
 
       &.signup-modal {
-        height: 722px;
+        height: 717px;
       }
 
       .info-header {
         background: #EFEFEF;
         padding: 25px;
-        border-bottom: 3px solid #DDD;
 
         .title {
           font-size: 22px;
@@ -376,8 +345,8 @@
         }
 
         .subtitle {
-          font-size: 18px;
-          line-height: 20px;
+          font-size: 13px;
+          line-height: 17px;
           margin-top: 4px;
 
           .link {
@@ -414,6 +383,9 @@
           }
   
           &.button-holder {
+            margin: 0;
+            margin-top: 15px;
+
             button {
               padding: 17px 20px;
               font-size: 18px;
