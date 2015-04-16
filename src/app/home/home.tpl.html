@@ -58,7 +58,29 @@
   <div class="book-cards">
     <div class="container">
       <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in recentBooksObj.results">
+        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in searchBooksObj.results" ng-if="searchBooksObj.results.length">
+          <div class="book-card" ng-click="showBookModal(book)">
+            <div class="picture-holder">
+              <div class="picture-overlay">
+                <div class="table-layout">
+                  <div class="cell">
+                    <div class="title">${{book.get('price')}}</div>
+                    <div class="tip">{{book.get('numViews')}} Views Today</div>
+                  </div>
+                </div>
+              </div>
+              <div class="picture" back-img="{{book.get('picture').url()}}"></div>
+            </div>
+
+            <div class="info-holder">
+              <div class="title">{{book.get('name')}}</div>
+              <div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
+              <div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in recentBooksObj.results" ng-if="!searchBooksObj.results.length">
           <div class="book-card" ng-click="showBookModal(book)">
             <div class="picture-holder">
               <div class="picture-overlay">

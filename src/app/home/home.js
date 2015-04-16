@@ -94,8 +94,10 @@ angular.module( 'ngBoilerplate.home', [
       return;
 
     // Stop if empty query
-    if($scope.searchBooksObj.query == "")
+    if($scope.searchBooksObj.query == "") {
+      $scope.searchBooksObj.results = [];
       return;
+    }
 
     // Reset variables before starting request
     $scope.searchBooksObj.isLoading = true;
