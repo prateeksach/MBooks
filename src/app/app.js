@@ -74,6 +74,7 @@ angular.module( 'ngBoilerplate', [
   // Variables for login and signup modals
   $scope.loginObj = {visible: false, email: "", password: "", isLoggingIn: false, loginError: "", timeout: null}
   $scope.signupObj = {visible: false, firstName: "", lastName: "", phone: "", email: "", password: "", confirm: "", isSigningUp: false, signupError: "", timeout: null}
+  $scope.sellObj = {visible: false, isAdding: false, addingError: "", timeout: null}
 
   // Hide modal
   $scope.hideSuperModal = function() {
@@ -94,25 +95,28 @@ angular.module( 'ngBoilerplate', [
     if(!rootScope.validateUser()) {
       return;
     }
+
+    // Disable body scroll and set variables
+    $rootScope.bodyScroll = false;
+    $scope.sellObj.visible = true;
+    $rootScope.showModal = true;
   }
 
   // Show login modal
   $scope.showLoginModal = function() {
     // Disable body scroll and set variables
-    $rootScope.bodyScroll = false;
-
     $scope.loginObj.visible = true;
     $scope.signupObj.visible = false;
+    $rootScope.bodyScroll = false;
     $rootScope.showModal = true;
   }
 
   // Show signup modal
   $scope.showSignupModal = function() {
     // Disable body scroll and set variables
-    $rootScope.bodyScroll = false;
-
     $scope.signupObj.visible = true;
     $scope.loginObj.visible = false;
+    $rootScope.bodyScroll = false;
     $rootScope.showModal = true;
   }
 
@@ -129,15 +133,12 @@ angular.module( 'ngBoilerplate', [
     // Double check input
     if(!$scope.loginObj.email || !$scope.loginObj.password) {
       $scope.loginObj.loginError = "Please enter all fields";
-
-      $scope.loginObj.timeout = $timeout(function() {
-        $scope.loginObj.loginError = "";
-      }, 1500);
-
-      return;
     } else if(!validateEmail($scope.loginObj.email)) {
       $scope.loginObj.loginError = "Please enter a valid email";
+    }
 
+    // Set a timeout to hide the error
+    if($scope.loginObj.loginError) {
       $scope.loginObj.timeout = $timeout(function() {
         $scope.loginObj.loginError = "";
       }, 1500);
@@ -179,31 +180,16 @@ angular.module( 'ngBoilerplate', [
     // Double check input
     if(!$scope.signupObj.firstName || !$scope.signupObj.lastName || !$scope.signupObj.phone || !$scope.signupObj.email || !$scope.signupObj.password || !$scope.signupObj.confirm) {
       $scope.signupObj.signupError = "Please enter all fields";
-
-      $scope.signupObj.timeout = $timeout(function() {
-        $scope.signupObj.signupError = "";
-      }, 1500);
-
-      return;
     } else if(!validateEmail($scope.signupObj.email)) {
       $scope.signupObj.signupError = "Please enter a valid email";
-
-      $scope.signupObj.timeout = $timeout(function() {
-        $scope.signupObj.signupError = "";
-      }, 1500);
-
-      return;
     } else if($scope.signupObj.password != $scope.signupObj.confirm) {
       $scope.signupObj.signupError = "Passwords don't match";
-
-      $scope.signupObj.timeout = $timeout(function() {
-        $scope.signupObj.signupError = "";
-      }, 1500);
-
-      return;
     } else if(!parseInt($scope.signupObj.phone) || ("" + parseInt($scope.signupObj.phone)).length != 10) {
       $scope.signupObj.signupError = "Please enter a valid phone";
+    }
 
+    // Set a timeout to hide the error
+    if($scope.signupObj.signupError) {
       $scope.signupObj.timeout = $timeout(function() {
         $scope.signupObj.signupError = "";
       }, 1500);
