@@ -28,6 +28,7 @@ angular.module( 'ngBoilerplate', [
   'templates-common',
   'ui.bootstrap',
   'ngBoilerplate.home',
+  'ngBoilerplate.about',
   'ui.router'
 ])
 
