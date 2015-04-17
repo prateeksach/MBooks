@@ -11,5 +11,8 @@
     "parse-angular-patch": "~0.1.2",
     "momentjs": "~2.10.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "resolutions": {
+    "angular": ">=1"
+  }
 }
