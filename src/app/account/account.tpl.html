@@ -1,3 +1,110 @@
-<div class="about-page">
-	About us!
+<div class="account-page">
+	<div class="jumbotron">
+    <div class="overlay"></div>
+    
+    <div class="table-layout">
+      <div class="cell">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <h1>Account</h1>
+          
+              <p>
+              	Use this page to update your personal details and manage the books you are selling or have sold.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+  	<div class="container">
+  		<div class="row">
+  			<div class="col-md-8 col-md-offset-2">
+			  	<div class="info-card">
+			  		<div class="info-header">
+			  			<div class="title">Update Profile</div>
+			  			<div class="subtitle">Feel free to update any personal information whenever you want. <strong>Remember</strong>, we don't share your phone number with anyone.</div>
+			  		</div>
+
+			  		<form class="info-content" ng-submit="updateUser()">
+			        <div class="label">First Name</div>
+			        <div class="input-holder">
+			          <input type="text" ng-model="userObj.firstName" />
+			        </div>
+
+			        <div class="label">Last Name</div>
+			        <div class="input-holder">
+			          <input type="text" ng-model="userObj.lastName" />
+			        </div>
+
+			        <div class="label">Phone Number</div>
+			        <div class="input-holder">
+			          <input type="text" placeholder="No Dashes" ng-model="userObj.phone" />
+			        </div>
+
+			        <div class="label">E-Mail</div>
+			        <div class="input-holder">
+			          <input type="email" ng-model="userObj.email" />
+			        </div>
+
+			        <div class="input-holder button-holder">
+			          <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!userObj.updateError, 'btn-danger':userObj.updateError, 'btn-success':userObj.updated}" ng-click="updateUser()">
+			            <span ng-if="!userObj.isUpdating && !userObj.updateError && !userObj.updated">Save</span>
+			            <span ng-if="userObj.isUpdating">Updating...</span>
+			            <span ng-if="userObj.updateError">{{userObj.updateError}}</span>
+			            <span ng-if="userObj.updated">Updated</span>
+			          </button>
+			        </div>
+			      </form>
+			  	</div>
+
+			  	<div class="info-card">
+			  		<div class="info-header">
+			  			<div class="title">Books Selling</div>
+			  			<div class="subtitle">Feel free to update the books you are selling and remember to mark them as sold!</div>
+			  		</div>
+
+			  		<div class="info-content">
+			  			<div class="text" ng-if="!booksObj.sellingResults.length && !booksObj.isLoading && !booksObj.errorLoading">You haven't started selling books yet! Get started now by <a ng-click="showSellModal()">clicking here</a>.</div>
+
+			  			<div class="text loading-text" ng-if="booksObj.isLoading && !booksObj.errorLoading">
+					      <i class="fa fa-spinner fa-spin"></i>
+			  			</div>
+
+			  			<div class="text" ng-if="booksObj.errorLoading">
+			  				Ahhh. There was an error in loading your books data. Click <a ng-click="loadSellingHistory()">here</a> to try again or email us at <a href="mailto:prateeks@umich.edu">prateeks@umich.edu</a> for immediate help.</div>
+
+				  			<div class="book-list" ng-if="booksObj.sellingResults.length">
+				  				<div class="book-item" ng-repeat="book in booksObj.sellingResults">
+				  					<div class="title">{{book.get('name')}}</div>
+				  					<div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
+				  					<div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
+				  				</div>
+				  			</div>
+			  			</div>
+			  		</div>
+
+			  		<div class="info-card" ng-if="booksObj.soldResults.length && !booksObj.isLoading && !booksObj.errorLoading">
+				  		<div class="info-header">
+				  			<div class="title">Books Sold</div>
+				  		</div>
+
+			  			<div class="info-content">
+				  			<div class="book-list" ng-if="booksObj.soldResults.length">
+				  				<div class="book-item" ng-repeat="book in booksObj.soldResults">
+				  					<div class="title">{{book.get('name')}}</div>
+				  					<div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
+				  					<div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
+				  				</div>
+				  			</div>
+			  			</div>
+			  		</div>
+			  	</div>
+		  	</div>
+	  	</div>
+  	</div>
+  </div>
 </div>

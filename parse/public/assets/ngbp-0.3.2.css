@@ -5975,7 +5975,7 @@ input:focus {
   margin-bottom: 30px;
 }
 .home-page .content-container .book-cards .book-card .picture-holder {
-  background: #FFF;
+  background: #EFEFEF;
   height: 305px;
   position: relative;
   z-index: -1;
@@ -6018,6 +6018,21 @@ input:focus {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+.home-page .content-container .book-cards .book-card .picture-holder .picture.sad-face {
+  text-align: center;
+}
+.home-page .content-container .book-cards .book-card .picture-holder .picture.sad-face .fa {
+  font-size: 150px;
+  line-height: 100%;
+  color: #BBB;
+}
+.home-page .content-container .book-cards .book-card .picture-holder .picture.sad-face .text {
+  font-weight: 600;
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 100%;
+  color: #BBB;
 }
 .home-page .content-container .book-cards .book-card .info-holder {
   position: absolute;
@@ -6128,50 +6143,53 @@ input:focus {
 .modal-overlay .modal-container.view-book-modal .book-info .info-footer button {
   border-radius: 3px;
 }
-.modal-overlay .modal-container.login-signup-modal {
+.modal-overlay .modal-container.input-modal {
   width: 400px;
   background: #FFF;
 }
-.modal-overlay .modal-container.login-signup-modal.login-modal {
+.modal-overlay .modal-container.input-modal.login-modal {
   height: 373px;
 }
-.modal-overlay .modal-container.login-signup-modal.signup-modal {
+.modal-overlay .modal-container.input-modal.signup-modal {
   height: 717px;
 }
-.modal-overlay .modal-container.login-signup-modal .info-header {
+.modal-overlay .modal-container.input-modal.sell-book-modal {
+  height: 995px;
+}
+.modal-overlay .modal-container.input-modal .info-header {
   background: #EFEFEF;
   padding: 25px;
 }
-.modal-overlay .modal-container.login-signup-modal .info-header .title {
+.modal-overlay .modal-container.input-modal .info-header .title {
   font-size: 22px;
   line-height: 26px;
 }
-.modal-overlay .modal-container.login-signup-modal .info-header .subtitle {
+.modal-overlay .modal-container.input-modal .info-header .subtitle {
   font-size: 13px;
   line-height: 17px;
   margin-top: 4px;
 }
-.modal-overlay .modal-container.login-signup-modal .info-header .subtitle .link {
+.modal-overlay .modal-container.input-modal .info-header .subtitle .link {
   cursor: pointer;
   text-decoration: underline;
 }
-.modal-overlay .modal-container.login-signup-modal .info-content {
+.modal-overlay .modal-container.input-modal .info-content {
   padding: 15px;
 }
-.modal-overlay .modal-container.login-signup-modal .info-content .label {
+.modal-overlay .modal-container.input-modal .info-content .label {
   font-size: 14px;
   line-height: 100%;
   margin-bottom: 8px;
-  font-weight: 400;
+  font-weight: 600;
   color: #000;
   padding: 0;
   display: block;
   text-align: left;
 }
-.modal-overlay .modal-container.login-signup-modal .info-content .input-holder {
+.modal-overlay .modal-container.input-modal .info-content .input-holder {
   margin-bottom: 10px;
 }
-.modal-overlay .modal-container.login-signup-modal .info-content .input-holder input {
+.modal-overlay .modal-container.input-modal .info-content .input-holder input {
   padding: 15px;
   font-size: 14px;
   border-radius: 4px;
@@ -6179,11 +6197,11 @@ input:focus {
   border: 2px solid #DDD !important;
   color: #000;
 }
-.modal-overlay .modal-container.login-signup-modal .info-content .input-holder.button-holder {
+.modal-overlay .modal-container.input-modal .info-content .input-holder.button-holder {
   margin: 0;
   margin-top: 15px;
 }
-.modal-overlay .modal-container.login-signup-modal .info-content .input-holder.button-holder button {
+.modal-overlay .modal-container.input-modal .info-content .input-holder.button-holder button {
   padding: 17px 20px;
   font-size: 18px;
   line-height: 100%;

@@ -1,4 +1,18 @@
-angular.module('templates-app', ['home/home.tpl.html']);
+angular.module('templates-app', ['about/about.tpl.html', 'account/account.tpl.html', 'home/home.tpl.html']);
+
+angular.module("about/about.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("about/about.tpl.html",
+    "<div class=\"about-page\">\n" +
+    "	About us!\n" +
+    "</div>");
+}]);
+
+angular.module("account/account.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("account/account.tpl.html",
+    "<div class=\"about-page\">\n" +
+    "	About us!\n" +
+    "</div>");
+}]);
 
 angular.module("home/home.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("home/home.tpl.html",
@@ -11,6 +25,7 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "    <div class=\"cell\">\n" +
     "      <div class=\"view-book-modal modal-container\" ng-show=\"bookModal.visible\" ng-click=\"doNothing()\" stop-event>\n" +
     "        <div class=\"book-picture\" back-img=\"{{bookModal.selectedBook.get('picture').url()}}\"></div>\n" +
+    "\n" +
     "        <div class=\"book-info\">\n" +
     "          <div class=\"info-header\">\n" +
     "            <div class=\"title\">{{bookModal.selectedBook.get('name')}}</div>\n" +
@@ -29,8 +44,70 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "          </div>\n" +
     "        </div>\n" +
     "      </div>\n" +
+    "\n" +
+    "      <div class=\"input-modal sell-book-modal modal-container\" ng-show=\"sellObj.visible\" ng-click=\"doNothing()\" stop-event>\n" +
+    "        <div class=\"info-header\">\n" +
+    "          <div class=\"title\">Sell Book</div>\n" +
+    "          <div class=\"subtitle\">Please fill out all required* fields to sell a book. When someone is interested, we will send you an email and you can initiate the conversation.</div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <form class=\"info-content\" ng-submit=\"addBook()\">\n" +
+    "          <div class=\"label\">Book Name*</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" ng-model=\"sellObj.bookName\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"label\">Picture URL (Use stock photo from Google or Amazon)</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" placeholder=\"We approve each picture so don't get any ideas!\" ng-model=\"sellObj.pictureUrl\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"label\">ISBN*</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" ng-model=\"sellObj.ISBN\" placeholder=\"Back of the book!\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"label\">Edition*</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" ng-model=\"sellObj.edition\" placeholder=\"Numbers only. Use '1' if no edition.\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"label\">Course Name*</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" ng-model=\"sellObj.courseName\" placeholder=\"EECS 203, MATH 214, etc.\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"label\">When was the course taken?*</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" ng-model=\"sellObj.courseTaken\" placeholder=\"Winter 2013, Fall 2015, etc.\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"label\">Price*</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" ng-model=\"sellObj.price\" placeholder=\"Just numbers please\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"label\">Condition*</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" ng-model=\"sellObj.condition\" placeholder=\"New, Like New, Used, Acceptable, Worn\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"label\">Notes</div>\n" +
+    "          <div class=\"input-holder\">\n" +
+    "            <input type=\"text\" ng-model=\"sellObj.notes\" placeholder=\"\" />\n" +
+    "          </div>\n" +
+    "\n" +
+    "          <div class=\"input-holder button-holder\">\n" +
+    "            <button type=\"submit\" class=\"btn btn-block\" ng-class=\"{'btn-primary':!sellObj.addingError, 'btn-danger':sellObj.addingError}\" ng-click=\"addBook()\">\n" +
+    "              <span ng-if=\"!sellObj.isAdding && !sellObj.addingError\">Add Book</span>\n" +
+    "              <span ng-if=\"sellObj.isAdding\">Adding...</span>\n" +
+    "              <span ng-if=\"sellObj.addingError\">{{sellObj.addingError}}</span>\n" +
+    "            </button>\n" +
+    "          </div>\n" +
+    "        </form>\n" +
+    "      </div>\n" +
     "      \n" +
-    "      <div class=\"login-signup-modal login-modal modal-container\" ng-show=\"loginObj.visible\" ng-click=\"doNothing()\" stop-event>\n" +
+    "      <div class=\"input-modal login-modal modal-container\" ng-show=\"loginObj.visible\" ng-click=\"doNothing()\" stop-event>\n" +
     "        <div class=\"info-header\">\n" +
     "          <div class=\"title\">Login</div>\n" +
     "          <div class=\"subtitle\">Please login to buy and sell on MBooks. Or <span class=\"link\" ng-click=\"showSignupModal()\">signup</span> if you're not a member yet.</div>\n" +
@@ -57,7 +134,7 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "        </form>\n" +
     "      </div>\n" +
     "\n" +
-    "      <div class=\"login-signup-modal signup-modal modal-container\" ng-show=\"signupObj.visible\" ng-click=\"doNothing()\" stop-event>\n" +
+    "      <div class=\"input-modal signup-modal modal-container\" ng-show=\"signupObj.visible\" ng-click=\"doNothing()\" stop-event>\n" +
     "        <div class=\"info-header\">\n" +
     "          <div class=\"title\">Signup</div>\n" +
     "          <div class=\"subtitle\">Please signup to buy and sell on MBooks. Or <span class=\"link\" ng-click=\"showLoginModal()\">login</span> if you're already a member.</div>\n" +
@@ -138,7 +215,7 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "            <div class=\"right-side\">\n" +
     "              <form class=\"search-holder\" ng-submit=\"searchBooks()\">\n" +
     "                <div class=\"input-holder\">\n" +
-    "                  <input type=\"text\" placeholder=\"Search by book name, course name, ISBN\" ng-model=\"searchBooksObj.query\" />\n" +
+    "                  <input type=\"text\" placeholder=\"Or Search by Book Name, ISBN or Course Name (EECS 203, MATH 214)\" ng-model=\"searchBooksObj.query\" />\n" +
     "                </div>\n" +
     "\n" +
     "                <button type=\"submit\" ng-click=\"searchBooks()\" class=\"btn btn-primary btn-lg animate-if\" ng-show=\"searchBooksObj.query || searchBooksObj.visible\">Search</button>\n" +
@@ -163,11 +240,16 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "                  <div class=\"table-layout\">\n" +
     "                    <div class=\"cell\">\n" +
     "                      <div class=\"title\">${{book.get('price')}}</div>\n" +
-    "                      <div class=\"tip\">{{book.get('numViews')}} Views Today</div>\n" +
+    "                      <div class=\"tip\">{{book.get('numViews')}} Views</div>\n" +
     "                    </div>\n" +
     "                  </div>\n" +
     "                </div>\n" +
-    "                <div class=\"picture\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
+    "                <div class=\"picture\" ng-if=\"book.get('picture')\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
+    "                <div class=\"picture sad-face table-layout\" ng-if=\"!book.get('picture')\">\n" +
+    "                  <div class=\"cell\">\n" +
+    "                    <i class=\"fa fa-frown-o\"></i>\n" +
+    "                  </div>\n" +
+    "                </div>\n" +
     "              </div>\n" +
     "\n" +
     "              <div class=\"info-holder\">\n" +
@@ -195,7 +277,13 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "                    </div>\n" +
     "                  </div>\n" +
     "                </div>\n" +
-    "                <div class=\"picture\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
+    "                <div class=\"picture\" ng-if=\"book.get('picture')\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
+    "                <div class=\"picture sad-face table-layout\" ng-if=\"!book.get('picture')\">\n" +
+    "                  <div class=\"cell\">\n" +
+    "                    <i class=\"fa fa-exclamation-circle\"></i>\n" +
+    "                    <div class=\"text\">No Image Yet</div>\n" +
+    "                  </div>\n" +
+    "                </div>\n" +
     "              </div>\n" +
     "\n" +
     "              <div class=\"info-holder\">\n" +

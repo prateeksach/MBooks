@@ -154,7 +154,7 @@
           </div>
 
           <div class="input-holder button-holder">
-            <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!signupObj.signupError, 'btn-danger':signupObj.signupError}" ng-click="loginUser()">
+            <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!signupObj.signupError, 'btn-danger':signupObj.signupError}" ng-click="signupUser()">
               <span ng-if="!signupObj.isSigningUp && !signupObj.signupError">Signup</span>
               <span ng-if="signupObj.isSigningUp">Signing Up...</span>
               <span ng-if="signupObj.signupError">{{signupObj.signupError}}</span>

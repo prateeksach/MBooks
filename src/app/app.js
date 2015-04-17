@@ -29,6 +29,7 @@ angular.module( 'ngBoilerplate', [
   'ui.bootstrap',
   'ngBoilerplate.home',
   'ngBoilerplate.about',
+  'ngBoilerplate.account',
   'ui.router'
 ])
 
@@ -43,7 +44,7 @@ angular.module( 'ngBoilerplate', [
 })
 
 // Super controller
-.controller( 'AppCtrl', function AppCtrl ( $rootScope, $scope, $location, $timeout ) {
+.controller( 'AppCtrl', function AppCtrl ( $rootScope, $scope, $location, $timeout, $state ) {
   // Variable for controlling body scroll when modal is open
   $rootScope.bodyScroll = true;
 
@@ -70,6 +71,12 @@ angular.module( 'ngBoilerplate', [
   $scope.navBarExpanded = false;
   $scope.toggleNavBarExpansion = function() {
     $scope.navBarExpanded = !$scope.navBarExpanded;
+  }
+
+  // Logout user
+  $scope.logoutUser = function() {
+    Parse.User.logOut();
+    $state.go("home");
   }
 
   // Variables for modals
@@ -227,7 +234,7 @@ angular.module( 'ngBoilerplate', [
 
   // Signup User
   $scope.signupUser = function() {
-    // Stop if already logging in
+    // Stop if already signing in
     if($scope.signupObj.isSigningUp)
       return;
    

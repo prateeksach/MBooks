@@ -87,3 +87,35 @@ Parse.Cloud.define("addBook", function(request, response) {
 		}
 	})
 });
+
+// Get user's selling history
+Parse.Cloud.define("sellingHistory", function(request, response) {
+	if(!request.user) {
+		response.error("Error: Invalid User");
+		return;
+	} 
+
+	var query = new Parse.Query(Book);
+	query.equalTo("user", request.user);
+	query.addDescending("sold");
+	query.limit(1000);
+
+	query.find({
+		useMasterKey: true,
+		success: function(list) {
+			var result = {selling: [], sold: []};
+
+			for(var index = 0; index < list.length; index++) {
+				if(list[index].get("sold"))
+					result.sold.push(list[index]);
+				else
+					result.selling.push(list[index]);
+			}
+
+			response.success(result);
+		},
+		error: function(error) {
+			response.error(error);
+		}
+	})
+});
