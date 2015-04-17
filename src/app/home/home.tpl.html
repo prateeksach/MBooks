@@ -27,8 +27,66 @@
         </div>
       </div>
 
-      <div class="input-modal sell-book-modal modal-container" ng-show="sellModal.visible" ng-click="doNothing()" stop-event>
+      <div class="input-modal sell-book-modal modal-container" ng-show="sellObj.visible" ng-click="doNothing()" stop-event>
+        <div class="info-header">
+          <div class="title">Sell Book</div>
+          <div class="subtitle">Please fill out all required* fields to sell a book. When someone is interested, we will send you an email and you can initiate the conversation.</div>
+        </div>
 
+        <form class="info-content" ng-submit="addBook()">
+          <div class="label">Book Name*</div>
+          <div class="input-holder">
+            <input type="text" ng-model="sellObj.bookName" />
+          </div>
+
+          <div class="label">Picture URL (Use stock photo from Google or Amazon)</div>
+          <div class="input-holder">
+            <input type="text" placeholder="We approve each picture so don't get any ideas!" ng-model="sellObj.pictureUrl" />
+          </div>
+
+          <div class="label">ISBN*</div>
+          <div class="input-holder">
+            <input type="text" ng-model="sellObj.ISBN" placeholder="Back of the book!" />
+          </div>
+
+          <div class="label">Edition*</div>
+          <div class="input-holder">
+            <input type="text" ng-model="sellObj.edition" placeholder="Numbers only. Use '1' if no edition." />
+          </div>
+
+          <div class="label">Course Name*</div>
+          <div class="input-holder">
+            <input type="text" ng-model="sellObj.courseName" placeholder="EECS 203, MATH 214, etc." />
+          </div>
+
+          <div class="label">When was the course taken?*</div>
+          <div class="input-holder">
+            <input type="text" ng-model="sellObj.courseTaken" placeholder="Winter 2013, Fall 2015, etc." />
+          </div>
+
+          <div class="label">Price*</div>
+          <div class="input-holder">
+            <input type="text" ng-model="sellObj.price" placeholder="Just numbers please" />
+          </div>
+
+          <div class="label">Condition*</div>
+          <div class="input-holder">
+            <input type="text" ng-model="sellObj.condition" placeholder="New, Like New, Used, Acceptable, Worn" />
+          </div>
+
+          <div class="label">Notes</div>
+          <div class="input-holder">
+            <input type="text" ng-model="sellObj.notes" placeholder="" />
+          </div>
+
+          <div class="input-holder button-holder">
+            <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!sellObj.addingError, 'btn-danger':sellObj.addingError}" ng-click="addBook()">
+              <span ng-if="!sellObj.isAdding && !sellObj.addingError">Add Book</span>
+              <span ng-if="sellObj.isAdding">Adding...</span>
+              <span ng-if="sellObj.addingError">{{sellObj.addingError}}</span>
+            </button>
+          </div>
+        </form>
       </div>
       
       <div class="input-modal login-modal modal-container" ng-show="loginObj.visible" ng-click="doNothing()" stop-event>
@@ -139,7 +197,7 @@
             <div class="right-side">
               <form class="search-holder" ng-submit="searchBooks()">
                 <div class="input-holder">
-                  <input type="text" placeholder="Or search by Book Name, ISBN or Course Name (EECS 203, MATH 214)" ng-model="searchBooksObj.query" />
+                  <input type="text" placeholder="Or Search by Book Name, ISBN or Course Name (EECS 203, MATH 214)" ng-model="searchBooksObj.query" />
                 </div>
 
                 <button type="submit" ng-click="searchBooks()" class="btn btn-primary btn-lg animate-if" ng-show="searchBooksObj.query || searchBooksObj.visible">Search</button>
@@ -164,11 +222,16 @@
                   <div class="table-layout">
                     <div class="cell">
                       <div class="title">${{book.get('price')}}</div>
-                      <div class="tip">{{book.get('numViews')}} Views Today</div>
+                      <div class="tip">{{book.get('numViews')}} Views</div>
                     </div>
                   </div>
                 </div>
-                <div class="picture" back-img="{{book.get('picture').url()}}"></div>
+                <div class="picture" ng-if="book.get('picture')" back-img="{{book.get('picture').url()}}"></div>
+                <div class="picture sad-face table-layout" ng-if="!book.get('picture')">
+                  <div class="cell">
+                    <i class="fa fa-frown-o"></i>
+                  </div>
+                </div>
               </div>
 
               <div class="info-holder">
@@ -196,7 +259,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="picture" back-img="{{book.get('picture').url()}}"></div>
+                <div class="picture" ng-if="book.get('picture')" back-img="{{book.get('picture').url()}}"></div>
+                <div class="picture sad-face table-layout" ng-if="!book.get('picture')">
+                  <div class="cell">
+                    <i class="fa fa-exclamation-circle"></i>
+                    <div class="text">No Image Yet</div>
+                  </div>
+                </div>
               </div>
 
               <div class="info-holder">

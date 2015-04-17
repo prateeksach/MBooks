@@ -55,23 +55,27 @@ Parse.Cloud.define("addBook", function(request, response) {
 	if(!request.user) {
 		response.error("Error: Invalid User");
 		return;
-	} else if(!request.params.name || !request.params.ISBN || !request.params.edition || !request.params.condition || !request.params.courseName || !request.params.courseTaken || !request.params.notes || !request.params.price) {
+	} else if(!request.params.bookName || !request.params.ISBN || !request.params.edition || !request.params.condition || !request.params.courseName || !request.params.courseTaken || !request.params.price) {
 		response.error("Error: Invalid Parameters");
 		return;
 	}
 
 	var book = new Book();
-	book.set("user", response.user);
-	book.set("name", response.params.name);
-	book.set("ISBN", response.params.ISBN);
-	book.set("edition", response.params.edition);
-	book.set("condition", response.params.condition);
-	book.set("courseName", response.params.courseName);
-	book.set("courseTaken", response.params.courseTaken);
-	book.set("notes", response.params.notes);
-	book.set("price", response.params.price);
+	book.set("user", request.user);
+	book.set("name", request.params.bookName);
+	book.set("ISBN", parseInt(request.params.ISBN));
+	book.set("edition", parseInt(request.params.edition));
+	book.set("condition", request.params.condition);
+	book.set("courseName", request.params.courseName);
+	book.set("courseTaken", request.params.courseTaken);
+	book.set("notes", request.params.notes);
+	book.set("price", parseInt(request.params.price));
+	book.set("pictureURL", request.params.pictureUrl);
 	book.set("sold", false);
-	book.set("numViews", 0);
+	book.set("numViews", 1);
+
+	var searchField = request.params.bookName.toLowerCase() + " " + request.params.courseName.toLowerCase() + " " + request.params.ISBN;
+	book.set("searchField", searchField);
 
 	book.save(null, {
 		useMasterKey: true,
