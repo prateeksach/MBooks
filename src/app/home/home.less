@@ -124,21 +124,23 @@
       // Single card
       .book-card {
         .box-shadow(0, 1px, 2px, rgba(0, 0, 0, 0.22));
+
         border-radius: 4px;
         background: #FFF;
         overflow: hidden;
         position: relative;
         z-index: 0;
         cursor: pointer;
-        height: 400px;
         margin-bottom: 30px;
+        display: table;
+        table-layout: fixed;
 
         // Picture on top
         .picture-holder {
           background: #EFEFEF;
-          height: 305px;
           position: relative;
-          z-index: -1;
+          display: table-row;
+          max-height: 305px;
 
           .picture-overlay {
             position: absolute;
@@ -175,11 +177,12 @@
           }
 
           .picture {
-            height: 100%;
             width: 100%;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
+          
+            img {
+              width: 100%;
+              height: 300px;
+            }
 
             &.sad-face {
               text-align: center;
@@ -203,31 +206,34 @@
 
         // Information on bottom
         .info-holder {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          padding: 15px;
           background: #FFF;
           .box-shadow(0, 0, 25px, rgba(0,0,0,0.4));
+          display: table-row;
+          height: auto;
 
-          .title {
-            font-size: 18px;
-            font-weight: 600;
-            line-height: 22px;
-          }
+          .padded-holder {
+            padding: 15px;
 
-          .subtitle {
-            margin-top: 5px;
-            font-size: 15px;
-            line-height: 18px;
-          }
+            .title {
+              font-size: 18px;
+              font-weight: 600;
+              line-height: 22px;
+              max-height: 44px;
+              overflow: hidden;
+            }
 
-          .tip {
-            margin-top: 5px;
-            color: #AAA;
-            font-size: 12px;
-            line-height: 14px;
+            .subtitle {
+              margin-top: 5px;
+              font-size: 15px;
+              line-height: 18px;
+            }
+
+            .tip {
+              margin-top: 5px;
+              color: #AAA;
+              font-size: 12px;
+              line-height: 14px;
+            }
           }
         }
       }
@@ -266,70 +272,71 @@
   // Modal content
   .modal-container {
     margin: 0 auto;
+    border-radius: 4px;
+    overflow: hidden;
 
     // View Book Modal Rules
     &.view-book-modal {
-      height: 100%;
-      max-height: 600px;
-      width: 85%;
-      max-width: 900px;
+      width: 100%;
+      max-width: 300px;
       font-size: 0;
+      position: relative;
 
-      > div {
-        display: inline-block;
-        vertical-align: top;
-        width: 50%;
-        height: 100%;
-      }
-
-      // Picture on left
+      // Picture on top
       .book-picture {
-        background-color: #EFEFEF;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
+        position: relative;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
       }
 
-      // Info on right
+      // Buy button on top
+      .buy-button {
+        background: rgba(0,0,0,0.8);
+        padding: 10px;
+
+        button {
+          border-radius: 3px;
+          padding: 7px 12px;
+
+          .transition(background);
+        }
+      }
+
+      // Info on bottom
       .book-info {
         position: relative;
         background: #FFF;
-        border-left: 3px solid #DDD;
+        padding: 15px;
 
         .info-header {
-          background: #EFEFEF;
-          padding: 25px;
-          border-bottom: 3px solid #DDD;
-
           .title {
-            font-size: 22px;
-            line-height: 26px;
+            font-size: 18px;
+            line-height: 22px;
+            font-weight: 600;
           }
 
           .subtitle {
-            font-size: 18px;
-            line-height: 20px;
+            font-size: 15px;
+            line-height: 17px;
             margin-top: 4px;
           }
         }
 
         .info-content {
-          padding: 25px;
+          margin-top: 5px;
 
           .text {
-            font-size: 15px;
-            line-height: 22px;
-          }
-        }
+            .label-item {
+              width: 80px;
+              display: inline-block;
+              font-weight: 600;
+            }
 
-        .info-footer {
-          position: absolute;
-          left: 25px;
-          right: 25px;
-          bottom: 25px;
-
-          button {
-            border-radius: 3px;
+            font-size: 12px;
+            line-height: 15px;
           }
         }
       }
@@ -337,7 +344,8 @@
 
     // Sell/Login/Signup Modals
     &.input-modal {
-      width: 400px;
+      width: 100%;
+      max-width: 400px;
       background: #FFF;
 
       // Heights for each modal

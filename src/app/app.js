@@ -10,6 +10,10 @@ function validateEmail(email) {
   return re.test(email);
 }
 
+function removeWhitespace(str) {
+  return str.replace(/^\s+|\s+$/g,'');  
+}
+
 // Moment Update
 moment.locale('en', {
   calendar : {
@@ -49,7 +53,7 @@ angular.module( 'ngBoilerplate', [
   $rootScope.bodyScroll = true;
 
   // Set rootScope variable for showing modal
-  $rootScope.showModal = false;
+  $scope.showModal = false;
 
   // Set page title whenever the URL changes
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
@@ -86,7 +90,7 @@ angular.module( 'ngBoilerplate', [
 
   // Hide modal
   $scope.hideSuperModal = function() {
-    $rootScope.showModal = false;
+    $scope.showModal = false;
     $rootScope.bodyScroll = true;
 
     // Delay before resetting the modal variables to avoid glitches
@@ -95,8 +99,6 @@ angular.module( 'ngBoilerplate', [
       $scope.signupObj = {visible: false, firstName: "", lastName: "", phone: "", email: "", password: "", confirm: "", isSigningUp: false, signupError: "", timeout: null}
       $scope.sellObj = {visible: false, bookName: "", pictureUrl: "", ISBN: "", edition: "", courseName: "", courseTaken: "", price: "", condition: "", notes: "", isAdding: false, addingError: "", timeout: null}
     }, 300);
-
-    $rootScope.$broadcast("modalHidden");
   }
 
   // Show sell modal
@@ -109,7 +111,7 @@ angular.module( 'ngBoilerplate', [
     $scope.sellObj.visible = true;
 
     $rootScope.bodyScroll = false;
-    $rootScope.showModal = true;
+    $scope.showModal = true;
   }
 
   // Show login modal
@@ -119,7 +121,7 @@ angular.module( 'ngBoilerplate', [
     $scope.signupObj.visible = false;
     
     $rootScope.bodyScroll = false;
-    $rootScope.showModal = true;
+    $scope.showModal = true;
   }
 
   // Show signup modal
@@ -129,7 +131,7 @@ angular.module( 'ngBoilerplate', [
     $scope.loginObj.visible = false;
     
     $rootScope.bodyScroll = false;
-    $rootScope.showModal = true;
+    $scope.showModal = true;
   }
 
   // Sell Book
@@ -175,6 +177,9 @@ angular.module( 'ngBoilerplate', [
     Parse.Cloud.run("addBook", params).then(function(book) {
       $scope.sellObj.isAdding = false;
       $scope.hideSuperModal();
+
+      $state.go("account");
+      $rootScope.$broadcast("bookAdded")
     }, function(error) {
       $scope.sellObj.isAdding = false;
       $scope.sellObj.addingError = "Adding failed... Try again";

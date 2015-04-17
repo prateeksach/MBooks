@@ -9,7 +9,8 @@ Parse.Cloud.define("recentBooks", function(request, response) {
 	var query = new Parse.Query(Book);
 	query.equalTo("sold", false);
 	query.addDescending("updatedAt");
-	query.limit(12);
+	query.include("user");
+	query.limit(30);
 
 	if(request.params.skip)
 		query.skip(request.params.skip)
@@ -17,7 +18,41 @@ Parse.Cloud.define("recentBooks", function(request, response) {
 	query.find({
 		useMasterKey: true,
 		success: function(list) {
+			for(var index = 0; index < list.length; index++) {
+				list[index].attributes.user = list[index].get("user").get("email");
+			}
+
 			response.success(list);
+		},
+		error: function(error) {
+			response.error(error);
+		}
+	})
+});
+
+// Increment number of views
+Parse.Cloud.define("incrementViews", function(request, response) {
+	if(!request.params.bookId) {
+		response.error("Error: Invalid parameters.");
+		return;
+	}
+
+	var query = new Parse.Query(Book);
+	query.equalTo("objectId", request.params.bookId);
+
+	query.first({
+		useMasterKey: true,
+		success: function(book) {
+			book.set("numViews", book.get("numViews") + 1);
+			book.save(null, {
+				useMasterKey: true,
+				success: function() {
+					response.success();
+				},
+				error: function(error) {
+					response.error(error);
+				}
+			})
 		},
 		error: function(error) {
 			response.error(error);
@@ -34,7 +69,8 @@ Parse.Cloud.define("searchQuery", function(request, response) {
 
 	var query = new Parse.Query(Book);
 	query.contains("searchField", request.params.query);
-	query.limit(12);
+	query.include("user");
+	query.limit(30);
 
 	if(request.params.skip)
 		query.skip(request.params.skip)
@@ -42,6 +78,10 @@ Parse.Cloud.define("searchQuery", function(request, response) {
 	query.find({
 		useMasterKey: true,
 		success: function(list) {
+			for(var index = 0; index < list.length; index++) {
+				list[index].attributes.user = list[index].get("user").get("email");
+			}
+
 			response.success(list);
 		},
 		error: function(error) {
