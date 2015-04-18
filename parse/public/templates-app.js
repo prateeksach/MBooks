@@ -74,6 +74,15 @@ angular.module("account/account.tpl.html", []).run(["$templateCache", function($
     "\n" +
     "			  	<div class=\"info-card\">\n" +
     "			  		<div class=\"info-header\">\n" +
+    "			  			<div class=\"title\">Reset Password</div>\n" +
+    "			  		</div>\n" +
+    "			  		<div class=\"info-content\">\n" +
+    "			  			<div class=\"text\">Please <a ng-click=\"resetPassword()\">click here</a> to send an reset password email to your default email address above.</div>\n" +
+    "			  		</div>\n" +
+    "			  	</div>\n" +
+    "\n" +
+    "			  	<div class=\"info-card\">\n" +
+    "			  		<div class=\"info-header\">\n" +
     "			  			<div class=\"title\">Books Selling</div>\n" +
     "			  			<div class=\"subtitle\">Feel free to update the books you are selling and remember to mark them as sold!</div>\n" +
     "			  		</div>\n" +

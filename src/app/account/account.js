@@ -37,6 +37,15 @@ angular.module( 'ngBoilerplate.account', [
     return "Posted " + moment(book.createdAt).fromNow(); 
   }
 
+  // Reset password
+  $scope.resetPassword = function() {
+    Parse.User.requestPasswordReset(Parse.User.current().get("email")).then(function() {
+      alert("Check your email for instructions on how to reset your password.");
+    }, function() {
+      alert("An error occured. Please try again or contact us for immediate feedback.");
+    })
+  }
+
   $scope.updateUser = function() {
     // Stop if already updating
     if($scope.userObj.isUpdating)

@@ -84,6 +84,35 @@ angular.module( 'ngBoilerplate', [
     $state.go("home");
   }
 
+  // Forgot password
+  $scope.forgotPassword = function() {
+    // Reset variables
+    $timeout.cancel($scope.loginObj.timeout);
+    $scope.loginObj.loginError = "";
+
+    // Double check input
+    if(!$scope.loginObj.email) {
+      $scope.loginObj.loginError = "Please enter an email";
+    } else if(!validateEmail($scope.loginObj.email)) {
+      $scope.loginObj.loginError = "Please enter a valid email";
+    }
+
+    // Set a timeout to hide the error
+    if($scope.loginObj.loginError) {
+      $scope.loginObj.timeout = $timeout(function() {
+        $scope.loginObj.loginError = "";
+      }, 1500);
+
+      return;
+    }
+
+    Parse.User.requestPasswordReset($scope.loginObj.email).then(function() {
+      alert("Check your email for instructions on how to reset your password.");
+    }, function() {
+      alert("An error occured. Please try again or contact us for immediate feedback.");
+    })
+  }
+
   // Variables for modals
   $scope.loginObj = {visible: false, email: "", password: "", isLoggingIn: false, loginError: "", timeout: null}
   $scope.signupObj = {visible: false, firstName: "", lastName: "", phone: "", email: "", password: "", confirm: "", isSigningUp: false, signupError: "", timeout: null}

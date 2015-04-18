@@ -37,6 +37,15 @@ angular.module( 'ngBoilerplate.account', [
     return "Posted " + moment(book.createdAt).fromNow(); 
   }
 
+  // Reset password
+  $scope.resetPassword = function() {
+    Parse.User.requestPasswordReset(Parse.User.current().get("email")).then(function() {
+      alert("Check your email for instructions on how to reset your password.");
+    }, function() {
+      alert("An error occured. Please try again or contact us for immediate feedback.");
+    })
+  }
+
   $scope.updateUser = function() {
     // Stop if already updating
     if($scope.userObj.isUpdating)
@@ -95,7 +104,7 @@ angular.module( 'ngBoilerplate.account', [
   // Mark a book as sold
   $scope.markAsSold = function(book) {
     Parse.Cloud.run("markAsSold", {bookId: book.id}).then(function() {
-      $scope.loadSellingHistory();
+      location.reload();
     }, function(error) {
       alert("Unable to mark as sold. Please try again or contact us for immediate help.");
     })
@@ -104,7 +113,7 @@ angular.module( 'ngBoilerplate.account', [
   // Relist a book
   $scope.markAsUnsold = function(book) {
     Parse.Cloud.run("markAsUnsold", {bookId: book.id}).then(function() {
-      $scope.loadSellingHistory();
+      location.reload();
     }, function(error) {
       alert("Unable to re-list the book. Please try again or contact us for immediate help.");
     })
