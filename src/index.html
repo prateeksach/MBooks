@@ -179,10 +179,10 @@
                   <textarea ng-model="contactObj.notes"></textarea>
                 </div>
 
-                <div ng-if="!validateUser()">
+                <div ng-hide="validateUser()">
                   <div class="label">Email</div>
                   <div class="input-holder">
-                    <input type="email" ng-model="contactObj.email" />
+                    <input type="text" ng-model="contactObj.email" />
                   </div>
                 </div>
 
