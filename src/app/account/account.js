@@ -92,6 +92,24 @@ angular.module( 'ngBoilerplate.account', [
     });
   }
 
+  // Mark a book as sold
+  $scope.markAsSold = function(book) {
+    Parse.Cloud.run("markAsSold", {bookId: book.id}).then(function() {
+      $scope.loadSellingHistory();
+    }, function(error) {
+      alert("Unable to mark as sold. Please try again or contact us for immediate help.");
+    })
+  } 
+
+  // Relist a book
+  $scope.markAsUnsold = function(book) {
+    Parse.Cloud.run("markAsUnsold", {bookId: book.id}).then(function() {
+      $scope.loadSellingHistory();
+    }, function(error) {
+      alert("Unable to re-list the book. Please try again or contact us for immediate help.");
+    })
+  } 
+
   // Load books selling and books sold
   $scope.loadSellingHistory = function() {
     // Stop if already fetching

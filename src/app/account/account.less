@@ -92,33 +92,59 @@
       	.book-item {
       		padding: 10px 0;
       		border-bottom: 1px solid #DDD;
-
-      		&:first-child {
-      			padding-top: 0;
-      		}
+          position: relative;
 
       		&:last-child {
-      			padding-bottom: 0;
       			border-bottom: 0;
       		}
 
-      		.title {
-            font-size: 18px;
-            font-weight: 600;
-            line-height: 22px;
+          .book-buttons {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 90px;
+
+            .btn {
+              background: transparent;
+              font-weight: 600;
+              text-transform: uppercase;
+              padding: 4px 12px;
+              font-size: 12px;
+
+              &.btn-primary {
+                border: 2px solid #428bca !important;
+                color: darken(#428bca, 20%);
+              }
+
+              &.btn-danger {
+                border: 2px solid #d9534f !important;
+                color: darken(#d9534f, 20%);
+              }
+            }
           }
 
-          .subtitle {
-            margin-top: 5px;
-            font-size: 15px;
-            line-height: 18px;
-          }
+          .book-content {
+            padding-right: 120px;
 
-          .tip {
-            margin-top: 5px;
-            color: #AAA;
-            font-size: 12px;
-            line-height: 14px;
+        		.title {
+              font-size: 18px;
+              font-weight: 600;
+              line-height: 22px;
+            }
+
+            .subtitle {
+              margin-top: 5px;
+              font-size: 15px;
+              line-height: 18px;
+            }
+
+            .tip {
+              margin-top: 5px;
+              color: #AAA;
+              font-size: 12px;
+              line-height: 14px;
+            }
           }
       	}
       }

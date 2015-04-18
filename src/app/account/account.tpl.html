@@ -67,7 +67,7 @@
 			  			<div class="subtitle">Feel free to update the books you are selling and remember to mark them as sold!</div>
 			  		</div>
 
-			  		<div class="info-content">
+			  		<div class="info-content" style="padding: 0 15px;">
 			  			<div class="text" ng-if="!booksObj.sellingResults.length && !booksObj.isLoading && !booksObj.errorLoading">You haven't started selling books yet! Get started now by <a ng-click="showSellModal()">clicking here</a>.</div>
 
 			  			<div class="text loading-text" ng-if="booksObj.isLoading && !booksObj.errorLoading">
@@ -75,36 +75,58 @@
 			  			</div>
 
 			  			<div class="text" ng-if="booksObj.errorLoading">
-			  				Ahhh. There was an error in loading your books data. Click <a ng-click="loadSellingHistory()">here</a> to try again or email us at <a href="mailto:prateeks@umich.edu">prateeks@umich.edu</a> for immediate help.</div>
+			  				Ahhh. There was an error in loading your books data. Click <a ng-click="loadSellingHistory()">here</a> to try again or email us at <a href="mailto:prateeks@umich.edu">prateeks@umich.edu</a> for immediate help.
+		  				</div>
 
-				  			<div class="book-list" ng-if="booksObj.sellingResults.length">
-				  				<div class="book-item" ng-repeat="book in booksObj.sellingResults">
-				  					<div class="title">{{book.get('name')}}</div>
-				  					<div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
-				  					<div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
-				  				</div>
-				  			</div>
+			  			<div class="book-list" ng-if="!booksObj.isLoading && !booksObj.errorLoading && booksObj.sellingResults.length">
+			  				<div class="book-item" ng-repeat="book in booksObj.sellingResults">
+			  					<div class="book-content">
+			  						<div class="title">{{book.get('name')}}</div>
+			  						<div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
+			  						<div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
+			  					</div>
+			  					<div class="book-buttons">
+			  						<div class="table-layout">
+			  							<div class="cell">
+				  							<button class="btn btn-block btn-primary" ng-click="editBook(book)">Edit</button>
+				  							<button class="btn btn-block btn-danger" ng-click="markAsSold(book)">
+				  								Sold
+			  								</button>
+				  						</div>
+				  					</div>
+			  					</div>
+			  				</div>
 			  			</div>
+		  			</div>
+		  		</div>
+
+		  		<div class="info-card" ng-if="booksObj.soldResults.length && !booksObj.isLoading && !booksObj.errorLoading">
+			  		<div class="info-header">
+			  			<div class="title">Books Sold</div>
 			  		</div>
 
-			  		<div class="info-card" ng-if="booksObj.soldResults.length && !booksObj.isLoading && !booksObj.errorLoading">
-				  		<div class="info-header">
-				  			<div class="title">Books Sold</div>
-				  		</div>
-
-			  			<div class="info-content">
-				  			<div class="book-list" ng-if="booksObj.soldResults.length">
-				  				<div class="book-item" ng-repeat="book in booksObj.soldResults">
-				  					<div class="title">{{book.get('name')}}</div>
-				  					<div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
-				  					<div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
-				  				</div>
-				  			</div>
+		  			<div class="info-content" style="padding: 0 15px;">
+			  			<div class="book-list" ng-if="booksObj.soldResults.length">
+			  				<div class="book-item" ng-repeat="book in booksObj.soldResults">
+			  					<div class="book-content">
+			  						<div class="title">{{book.get('name')}}</div>
+			  						<div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
+			  						<div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
+			  					</div>
+			  					<div class="book-buttons">
+			  						<div class="table-layout">
+			  							<div class="cell">
+				  							<button class="btn btn-block btn-danger" ng-click="markAsUnsold(book)">Re-List</button>
+				  						</div>
+				  					</div>
+			  					</div>
+			  				</div>
 			  			</div>
-			  		</div>
+		  			</div>
+		  		</div>
+
 			  	</div>
 		  	</div>
 	  	</div>
   	</div>
-  </div>
 </div>

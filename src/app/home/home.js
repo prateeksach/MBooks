@@ -46,7 +46,7 @@ angular.module( 'ngBoilerplate.home', [
 // Home page controller
 .controller( 'HomeCtrl', function HomeController( $scope, $rootScope, $timeout ) {
   // Modal related variables
-  $scope.bookModal = {visible: false, selectedBook: null, buttonText:"Contact Seller", buttonColor: "btn-primary"}
+  $scope.bookModal = {visible: false, selectedBook: null, buttonText:"E-Mail Seller", buttonColor: "btn-primary"}
 
   // Objects for recent books and searching
   $scope.searchBooksObj = {visible: false, query: "", isLoading: false, noResults: false, errorLoading: false, results: []}
@@ -55,6 +55,14 @@ angular.module( 'ngBoilerplate.home', [
   // Empty function to avoid event bubbling
   $scope.doNothing = function() {
 
+  }
+
+  // Load appropriate depending on what's visible
+  $scope.loadSectionContent = function() {
+    if($scope.searchBooksObj.visible)
+      $scope.searchBooks();
+    else
+      $scope.loadRecentBooks();
   }
 
   // Truncate name to fit in two lines 
@@ -94,10 +102,11 @@ angular.module( 'ngBoilerplate.home', [
   // Hide modal
   $scope.hideModal = function() {
     $scope.bookModal.visible = false;
+    $rootScope.bodyScroll = true;
     
     // Delay before resetting the modal variables to avoid glitches
     $timeout(function() {
-      $scope.bookModal = {visible: false, selectedBook: null, buttonText:"Contact Seller", buttonColor: "btn-primary"}
+      $scope.bookModal = {visible: false, selectedBook: null, buttonText:"E-Mail Seller", buttonColor: "btn-primary"}
     }, 300);
   }
 

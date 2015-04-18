@@ -1,0 +1,175 @@
+<div class="close-container animate-if" ng-show="bookModal.visible" ng-click="hideModal()">
+  <i class="fa fa-times"></i>
+</div>
+
+<div class="modal-overlay animate-if" ng-show="bookModal.visible" ng-click="hideModal()">
+  <div class="table-layout">
+    <div class="cell">
+      <div class="view-book-modal modal-container" ng-click="doNothing()" stop-event>
+        <div class="book-picture">
+          <img src="{{bookModal.selectedBook.get('picture').url()}}" />
+        </div>
+
+        <div class="book-info">
+          <div class="info-header">
+            <div class="title">{{bookModal.selectedBook.get('name')}}</div>
+            <div class="subtitle">{{bookModal.selectedBook.get('courseName')}} ({{bookModal.selectedBook.get('courseTaken')}})</div>
+          </div>
+
+          <div class="info-content">
+            <div class="text"><span class="label-item">ISBN:</span> {{bookModal.selectedBook.get('ISBN')}}</div>
+            <div class="text"><span class="label-item">Condition:</span> {{bookModal.selectedBook.get('condition')}}</div>
+            <div class="text"><span class="label-item">Price:</span> ${{bookModal.selectedBook.get('price')}}</div>
+            <div class="text" ng-if="bookModal.selectedBook.get('notes')">Notes: {{bookModal.selectedBook.get('notes')}}</div>
+          </div>
+
+          <div class="buy-button">
+            <button class="btn btn-block {{bookModal.buttonColor}}" ng-click="contactSeller()">{{bookModal.buttonText}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="home-page">
+  <div class="jumbotron">
+    <div class="overlay"></div>
+    
+    <div class="table-layout">
+      <div class="cell">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-sm-12">
+              <h1>Find Books on Campus</h1>
+          
+              <p>
+                Have you been using Facebook groups to buy and sell books? Does it suck? Then, this is what you need. We're a craigslist specifically for books at the University of Michigan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <div class="container">
+      <div class="row">  
+        <div class="col-md-12">
+          <div class="top-bar">
+            <div class="left-button" ng-click="showAllBooks()" ng-class="{'active':recentBooksObj.visible}">Show All Books</div>
+
+            <div class="right-side">
+              <form class="search-holder" ng-submit="searchBooks()">
+                <div class="input-holder">
+                  <input type="text" placeholder="Or Search by Book Name, ISBN or Course Name (EECS 203, MATH 214)" ng-model="searchBooksObj.query" />
+                </div>
+
+                <button type="submit" ng-click="searchBooks()" class="btn btn-primary btn-lg animate-if" ng-show="searchBooksObj.query || searchBooksObj.visible">Search</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loading-container animate-if" ng-show="searchBooksObj.isLoading || recentBooksObj.isLoading">
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
+
+    <div class="loading-container error-container animate-if" ng-show="searchBooksObj.errorLoading || recentBooksObj.errorLoading">
+      <div class="text">Ahhh. There was an error in loading your books data. Click <a ng-click="loadSectionContent()">here</a> to try again or email us at <a href="mailto:prateeks@umich.edu">prateeks@umich.edu</a> for immediate help.</div>
+    </div>
+
+    <div class="loading-container error-container animate-if" ng-show="searchBooksObj.visible && !searchBooksObj.results.length && !searchBooksObj.isLoading">
+      <i class="fa fa-frown-o"></i>
+      <div class="text">There were no search results for your query... Please check your spelling!</div>
+    </div>
+
+    <div class="loading-container error-container animate-if" ng-show="recentBooksObj.visible && !recentBooksObj.results.length && !recentBooksObj.isLoading">
+      <i class="fa fa-frown-o"></i>
+      <div class="text">There are currently no books in our database. Please try again later!</div>
+    </div>
+
+    <div class="book-cards animate-if" ng-show="searchBooksObj.visible && searchBooksObj.results.length && !searchBooksObj.isLoading && !searchBooksObj.errorLoading">
+      <div class="container">
+        <div class="row">  
+          <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in searchBooksObj.results">
+            <div class="book-card" ng-click="showBookModal(book)">
+              <div class="picture-holder">
+                <div class="picture-overlay">
+                  <div class="table-layout">
+                    <div class="cell">
+                      <div class="title">${{book.get('price')}}</div>
+                      <div class="tip">{{book.get('numViews')}} Views</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="picture" ng-if="book.get('picture')">
+                  <img ng-src="{{book.get('picture').url()}}" />
+                </div>
+                
+                <div class="picture sad-face table-layout" ng-if="!book.get('picture')">
+                  <div class="cell">
+                    <i class="fa fa-exclamation-circle"></i>
+                    <div class="text">No Image Yet</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-holder">
+                <div class="padded-holder">
+                  <div class="title">{{truncatedBookname(book.get('name'))}}</div>
+                  <div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
+                  <div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="book-cards animate-if" ng-show="recentBooksObj.visible && recentBooksObj.results.length && !recentBooksObj.isLoading && !recentBooksObj.errorLoading">
+      <div class="container">
+        <div class="row">  
+          <div class="col-md-3 col-sm-6 col-xs-12 animate-if" ng-repeat="book in recentBooksObj.results">
+            <div class="book-card" ng-click="showBookModal(book)">
+              <div class="picture-holder">
+                <div class="picture-overlay">
+                  <div class="table-layout">
+                    <div class="cell">
+                      <div class="title">${{book.get('price')}}</div>
+                      <div class="tip">{{book.get('numViews')}} Views</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="picture" ng-if="book.get('picture')">
+                  <img ng-src="{{book.get('picture').url()}}" />
+                </div>
+                
+                <div class="picture sad-face table-layout" ng-if="!book.get('picture')">
+                  <div class="cell">
+                    <i class="fa fa-exclamation-circle"></i>
+                    <div class="text">No Image Yet</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-holder">
+                <div class="padded-holder">
+                  <div class="title">{{truncatedBookname(book.get('name'))}}</div>
+                  <div class="subtitle">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>
+                  <div class="tip">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

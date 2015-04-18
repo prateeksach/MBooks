@@ -58,6 +58,7 @@ angular.module( 'ngBoilerplate', [
   // Set page title whenever the URL changes
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
     if ( angular.isDefined( toState.data.pageTitle ) ) {
+      window.scrollTo(0, 0);
       $scope.pageTitle = toState.data.pageTitle + ' | MBooks' ;
     }
   });
@@ -86,7 +87,8 @@ angular.module( 'ngBoilerplate', [
   // Variables for modals
   $scope.loginObj = {visible: false, email: "", password: "", isLoggingIn: false, loginError: "", timeout: null}
   $scope.signupObj = {visible: false, firstName: "", lastName: "", phone: "", email: "", password: "", confirm: "", isSigningUp: false, signupError: "", timeout: null}
-  $scope.sellObj = {visible: false, bookName: "", pictureUrl: "", ISBN: "", edition: "", courseName: "", courseTaken: "", price: "", condition: "", notes: "", isAdding: false, addingError: "", timeout: null}
+  $scope.sellObj = {visible: false, editMode: false, editId: "", bookName: "", pictureUrl: "", ISBN: "", edition: "", courseName: "", courseTaken: "", price: "", condition: "", notes: "", isAdding: false, addingError: "", timeout: null}
+  $scope.contactObj = {visible: false, notes: "", email: "", isSaving: false, savingError: false, timeout: null}
 
   // Hide modal
   $scope.hideSuperModal = function() {
@@ -97,7 +99,8 @@ angular.module( 'ngBoilerplate', [
     $timeout(function() {
       $scope.loginObj = {visible: false, email: "", password: "", isLoggingIn: false, loginError: "", timeout: null}
       $scope.signupObj = {visible: false, firstName: "", lastName: "", phone: "", email: "", password: "", confirm: "", isSigningUp: false, signupError: "", timeout: null}
-      $scope.sellObj = {visible: false, bookName: "", pictureUrl: "", ISBN: "", edition: "", courseName: "", courseTaken: "", price: "", condition: "", notes: "", isAdding: false, addingError: "", timeout: null}
+      $scope.sellObj = {visible: false, editMode: false, editId: "", bookName: "", pictureUrl: "", ISBN: "", edition: "", courseName: "", courseTaken: "", price: "", condition: "", notes: "", isAdding: false, addingError: "", timeout: null}
+      $scope.contactObj = {visible: false, notes: "", email: "", isSaving: false, savingError: false, timeout: null}
     }, 300);
   }
 
@@ -109,6 +112,15 @@ angular.module( 'ngBoilerplate', [
 
     // Disable body scroll and set variables
     $scope.sellObj.visible = true;
+
+    $rootScope.bodyScroll = false;
+    $scope.showModal = true;
+  }
+
+  // Show contact modal
+  $scope.showContactModal = function() {
+    // Disable body scroll and set variables
+    $scope.contactObj.visible = true;
 
     $rootScope.bodyScroll = false;
     $scope.showModal = true;
@@ -132,6 +144,69 @@ angular.module( 'ngBoilerplate', [
     
     $rootScope.bodyScroll = false;
     $scope.showModal = true;
+  }
+
+  // Submit contact
+  $scope.saveFeedback = function() {
+    // Stop if already saving
+    if($scope.contactObj.isSaving)
+      return;
+
+    // Reset variables
+    $timeout.cancel($scope.contactObj.timeout);
+    $scope.contactObj.savingError = "";
+    
+     // Double check input
+    if(!$scope.contactObj.notes) {
+      $scope.contactObj.savingError = "Please enter a valid note";
+    } else if($scope.contactObj.email && !validateEmail($scope.contactObj.email)) {
+      $scope.contactObj.savingError = "Please enter a valid email";
+    }
+
+    // Set a timeout to hide the error
+    if($scope.contactObj.savingError) {
+      $scope.contactObj.timeout = $timeout(function() {
+        $scope.contactObj.savingError = "";
+      }, 1500);
+
+      return;
+    }
+
+    // Set new variables
+    $scope.contactObj.isSaving = true;
+
+    // Make Parse request
+    Parse.Cloud.run("saveFeedback", {notes: $scope.contactObj.notes, email: $scope.contactObj.email}).then(function() {
+      $scope.contactObj.isSaving = false;
+      
+      alert("Your request has been submitted. We will get back to you as soon as possible!");
+
+      $scope.hideSuperModal();
+    }, function(error) {
+      $scope.contactObj.isSaving = false;
+      $scope.contactObj.savingError = "Request failed... Try again";
+
+      $scope.contactObj.timeout = $timeout(function() {
+        $scope.contactObj.savingError = "";
+      }, 1500);
+    })
+  }
+
+  // Let user edit an active book
+  $scope.editBook = function(book) {
+    $scope.sellObj.editMode = true;
+    $scope.sellObj.editId = book.id;
+    $scope.sellObj.bookName = book.get("name");
+    $scope.sellObj.pictureUrl = book.get("pictureURL");
+    $scope.sellObj.ISBN = book.get("ISBN");
+    $scope.sellObj.edition = book.get("edition");
+    $scope.sellObj.courseName = book.get("courseName");
+    $scope.sellObj.courseTaken = book.get("courseTaken");
+    $scope.sellObj.price = book.get("price");
+    $scope.sellObj.condition = book.get("condition");
+    $scope.sellObj.notes = book.get("notes");
+
+    $scope.showSellModal();
   }
 
   // Sell Book
@@ -167,14 +242,22 @@ angular.module( 'ngBoilerplate', [
     // Set new variables
     $scope.sellObj.isAdding = true;
 
+    var requestName = "addBook"
     var params = angular.copy($scope.sellObj);
     delete params["isAdding"];
     delete params["addingError"];
     delete params["timeout"];
     delete params["visible"];
+    delete params["editMode"];
+
+    // Add object id if saving book
+    if($scope.sellObj.editMode) {
+      params["editId"] = $scope.sellObj.editId;
+      requestName = "saveBook";
+    }
 
     // Make Parse request
-    Parse.Cloud.run("addBook", params).then(function(book) {
+    Parse.Cloud.run(requestName, params).then(function(book) {
       $scope.sellObj.isAdding = false;
       $scope.hideSuperModal();
 
@@ -182,7 +265,7 @@ angular.module( 'ngBoilerplate', [
       $rootScope.$broadcast("bookAdded")
     }, function(error) {
       $scope.sellObj.isAdding = false;
-      $scope.sellObj.addingError = "Adding failed... Try again";
+      $scope.sellObj.addingError = "Request failed... Try again";
 
       $scope.sellObj.timeout = $timeout(function() {
         $scope.sellObj.addingError = "";
