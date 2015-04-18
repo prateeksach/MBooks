@@ -242,7 +242,7 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "    <div class=\"book-cards animate-if\" ng-show=\"searchBooksObj.visible && searchBooksObj.results.length && !searchBooksObj.isLoading && !searchBooksObj.errorLoading\">\n" +
     "      <div class=\"container\">\n" +
     "        <div class=\"row\">  \n" +
-    "          <div class=\"col-md-3 col-sm-6 col-xs-12\" ng-repeat=\"book in searchBooksObj.results\">\n" +
+    "          <div class=\"col-md-3 col-sm-6 col-xs-6\" ng-repeat=\"book in searchBooksObj.results\">\n" +
     "            <div class=\"book-card\" ng-click=\"showBookModal(book)\">\n" +
     "              <div class=\"picture-holder\">\n" +
     "                <div class=\"picture-overlay\">\n" +
@@ -254,9 +254,7 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "                  </div>\n" +
     "                </div>\n" +
     "\n" +
-    "                <div class=\"picture\" ng-if=\"book.get('picture')\">\n" +
-    "                  <img ng-src=\"{{book.get('picture').url()}}\" />\n" +
-    "                </div>\n" +
+    "                <div class=\"picture\" ng-if=\"book.get('picture')\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
     "                \n" +
     "                <div class=\"picture sad-face table-layout\" ng-if=\"!book.get('picture')\">\n" +
     "                  <div class=\"cell\">\n" +
@@ -282,7 +280,7 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "    <div class=\"book-cards animate-if\" ng-show=\"recentBooksObj.visible && recentBooksObj.results.length && !recentBooksObj.isLoading && !recentBooksObj.errorLoading\">\n" +
     "      <div class=\"container\">\n" +
     "        <div class=\"row\">  \n" +
-    "          <div class=\"col-md-3 col-sm-6 col-xs-12 animate-if\" ng-repeat=\"book in recentBooksObj.results\">\n" +
+    "          <div class=\"col-md-3 col-sm-6 col-xs-6 animate-if\" ng-repeat=\"book in recentBooksObj.results\">\n" +
     "            <div class=\"book-card\" ng-click=\"showBookModal(book)\">\n" +
     "              <div class=\"picture-holder\">\n" +
     "                <div class=\"picture-overlay\">\n" +
@@ -294,9 +292,7 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "                  </div>\n" +
     "                </div>\n" +
     "\n" +
-    "                <div class=\"picture\" ng-if=\"book.get('picture')\">\n" +
-    "                  <img ng-src=\"{{book.get('picture').url()}}\" />\n" +
-    "                </div>\n" +
+    "                <div class=\"picture\" ng-if=\"book.get('picture')\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
     "                \n" +
     "                <div class=\"picture sad-face table-layout\" ng-if=\"!book.get('picture')\">\n" +
     "                  <div class=\"cell\">\n" +
