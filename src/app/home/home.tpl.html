@@ -95,7 +95,7 @@
     <div class="book-cards animate-if" ng-show="searchBooksObj.visible && searchBooksObj.results.length && !searchBooksObj.isLoading && !searchBooksObj.errorLoading">
       <div class="container">
         <div class="row">  
-          <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="book in searchBooksObj.results">
+          <div class="col-md-3 col-sm-6 col-xs-6" ng-repeat="book in searchBooksObj.results">
             <div class="book-card" ng-click="showBookModal(book)">
               <div class="picture-holder">
                 <div class="picture-overlay">
@@ -107,9 +107,7 @@
                   </div>
                 </div>
 
-                <div class="picture" ng-if="book.get('picture')">
-                  <img ng-src="{{book.get('picture').url()}}" />
-                </div>
+                <div class="picture" ng-if="book.get('picture')" back-img="{{book.get('picture').url()}}"></div>
                 
                 <div class="picture sad-face table-layout" ng-if="!book.get('picture')">
                   <div class="cell">
@@ -135,7 +133,7 @@
     <div class="book-cards animate-if" ng-show="recentBooksObj.visible && recentBooksObj.results.length && !recentBooksObj.isLoading && !recentBooksObj.errorLoading">
       <div class="container">
         <div class="row">  
-          <div class="col-md-3 col-sm-6 col-xs-12 animate-if" ng-repeat="book in recentBooksObj.results">
+          <div class="col-md-3 col-sm-6 col-xs-6 animate-if" ng-repeat="book in recentBooksObj.results">
             <div class="book-card" ng-click="showBookModal(book)">
               <div class="picture-holder">
                 <div class="picture-overlay">
@@ -147,9 +145,7 @@
                   </div>
                 </div>
 
-                <div class="picture" ng-if="book.get('picture')">
-                  <img ng-src="{{book.get('picture').url()}}" />
-                </div>
+                <div class="picture" ng-if="book.get('picture')" back-img="{{book.get('picture').url()}}"></div>
                 
                 <div class="picture sad-face table-layout" ng-if="!book.get('picture')">
                   <div class="cell">

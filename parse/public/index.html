@@ -52,16 +52,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" ui-sref="home">MBooks</a>
+          <a class="navbar-brand" ui-sref="home">
+            <img src= "assets/images/text-logo.png" />
+          </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" collapse="!navBarExpanded">          
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#/about">About</a></li>
-            <li><a>Contact</a></li>
-            <li ng-if="validateUser()"><a ng-click="showSellModal()">Sell</a></li>
+            <li><a href="#/home">Home</a></li>
+            <li><a ng-click="showContactModal()">Contact</a></li>
+
+            <li ng-if="validateUser()"><a ng-click="showSellModal()">Sell Book</a></li>
             <li ng-if="validateUser()"><a href="#/account">Account</a></li>
+            <li ng-if="validateUser()" class="signup-button"><a ng-click="logoutUser()">Logout</a></li>
+
             <li ng-if="!validateUser()"><a ng-click="showLoginModal()">Login</a></li>
             <li ng-if="!validateUser()" class="signup-button"><a ng-click="showSignupModal()">Signup</a></li>
           </ul>
@@ -71,33 +76,200 @@
 
     <div class="main-container">
       <div ui-view="main"></div>
-    </div>
 
-    <!-- <footer class="footer">
-      <div class="container">
-        <div class="footer-inner">
-          <ul class="social">
-            <li><a target="_blank" href="http://gplus.to/joshdmiller"><i class="fa fa-google-plus-sign"></i></a></li>
-            <li><a target="_blank" href="http://twitter.com/joshdmiller"><i class="fa fa-twitter-sign"></i></a></li>
-            <li><a target="_blank" href="http://linkedin.com/in/joshdmiller"><i class="fa fa-linkedin-sign"></i></a></li>
-            <li><a target="_blank" href="http://github.com/ngbp/ngbp"><i class="fa fa-github-sign"></i></a></li>
-          </ul>
-          
+      <div class="close-container animate-if" ng-hide="!showModal" ng-click="hideSuperModal()">
+        <i class="fa fa-times"></i>
+      </div>
 
-          <p>
-            (c) 2013 <a href="http://www.joshdavidmiller.com">Josh David Miller</a>. 
-            <a href="http://github.com/ngbp/ngbp/fork_select">Fork this</a>
-            to kickstart your next project.
-            <br />
-            ngbp is based on
-            <a href="http://www.angularjs.org">AngularJS</a>,
-            <a href="http://getbootstrap.com">Bootstrap</a>, 
-            <a href="http://angular-ui.github.com/bootstrap">UI Bootstrap</a>,
-            and 
-            <a href="http://fortawesome.github.com/Font-Awesome">Font Awesome</a>.        
-          </p>
+      <div class="modal-overlay animate-if" ng-hide="!showModal" ng-click="hideSuperModal()">
+        <div class="table-layout">
+          <div class="cell">
+            <div class="input-modal sell-book-modal modal-container" ng-show="sellObj.visible" ng-click="doNothing()" stop-event>
+              <div class="info-header">
+                <div class="title">
+                  <span ng-if="!sellObj.editMode">Sell Book</span>
+                  <span ng-if="sellObj.editMode">Update Book</span>
+                </div>
+                <div class="subtitle">Please fill out all required* fields to sell a book. When someone is interested, we will send you an email and you can initiate the conversation.</div>
+              </div>
+
+              <form class="info-content" ng-submit="addBook()">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="label">Book Name*</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="sellObj.bookName" />
+                    </div>
+
+                    <div class="label">Picture URL (Use stock photo from Google or Amazon)</div>
+                    <div class="input-holder">
+                      <input type="text" placeholder="We approve each picture so don't get any ideas!" ng-model="sellObj.pictureUrl" />
+                    </div>
+
+                    <div class="label">ISBN*</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="sellObj.ISBN" placeholder="Back of the book!" />
+                    </div>
+
+                    <div class="label">Edition*</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="sellObj.edition" placeholder="Numbers only. Use '1' if no edition." />
+                    </div>
+
+                    <div class="label">Course Name*</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="sellObj.courseName" placeholder="EECS 203, MATH 214, etc." />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="label">When was the course taken?*</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="sellObj.courseTaken" placeholder="Winter 2013, Fall 2015, etc." />
+                    </div>
+
+                    <div class="label">Price*</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="sellObj.price" placeholder="Just numbers please" />
+                    </div>
+
+                    <div class="label">Condition*</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="sellObj.condition" placeholder="New, Like New, Used, Acceptable, Worn" />
+                    </div>
+
+                    <div class="label">Notes</div>
+                    <div class="input-holder">
+                      <textarea  ng-model="sellObj.notes" placeholder="Optional"></textarea>
+                    </div>
+
+                    <div class="input-holder button-holder">
+                      <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!sellObj.addingError, 'btn-danger':sellObj.addingError}" ng-click="addBook()">
+                        <span ng-if="!sellObj.isAdding && !sellObj.addingError && !sellObj.editMode">Add Book</span>
+                        <span ng-if="!sellObj.isAdding && !sellObj.addingError && sellObj.editMode">Update Book</span>
+                        <span ng-if="sellObj.isAdding && !sellObj.editMode">Adding...</span>
+                        <span ng-if="sellObj.isAdding && sellObj.editMode">Updating...</span>
+                        <span ng-if="sellObj.addingError">{{sellObj.addingError}}</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            
+            <div class="input-modal login-modal modal-container" ng-show="loginObj.visible" ng-click="doNothing()" stop-event>
+              <div class="info-header">
+                <div class="title">Login</div>
+                <div class="subtitle">Please login to buy and sell on MBooks. Or <span class="link" ng-click="showSignupModal()">signup</span> if you're not a member yet.</div>
+              </div>
+
+              <form class="info-content" ng-submit="loginUser()">
+                <div class="label">E-Mail</div>
+                <div class="input-holder">
+                  <input type="email" ng-model="loginObj.email" />
+                </div>
+
+                <div class="label">Password</div>
+                <div class="input-holder">
+                  <input type="password" ng-model="loginObj.password" />
+                </div>
+
+                <div class="input-holder button-holder">
+                  <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!loginObj.loginError, 'btn-danger':loginObj.loginError}" ng-click="loginUser()">
+                    <span ng-if="!loginObj.isLoggingIn && !loginObj.loginError">Login</span>
+                    <span ng-if="loginObj.isLoggingIn">Logging In...</span>
+                    <span ng-if="loginObj.loginError">{{loginObj.loginError}}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="input-modal contact-modal modal-container" ng-show="contactObj.visible" ng-click="doNothing()" stop-event>
+              <div class="info-header">
+                <div class="title">Contact Us</div>
+                <div class="subtitle">If you have any questions, feedback or suggestions, please feel free to email us and we will get back to you as soon as possible.</div>
+              </div>
+
+              <form class="info-content" ng-submit="saveFeedback()">
+                <div class="label">Message</div>
+                <div class="input-holder">
+                  <textarea ng-model="contactObj.notes"></textarea>
+                </div>
+
+                <div ng-hide="validateUser()">
+                  <div class="label">Email</div>
+                  <div class="input-holder">
+                    <input type="text" ng-model="contactObj.email" />
+                  </div>
+                </div>
+
+                <div class="input-holder button-holder">
+                  <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!contactObj.savingError, 'btn-danger':contactObj.savingError}" ng-click="saveFeedback()">
+                    <span ng-if="!contactObj.isSaving && !contactObj.savingError">Submit</span>
+                    <span ng-if="contactObj.isSaving">Submitting...</span>
+                    <span ng-if="contactObj.savingError">{{contactObj.savingError}}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="input-modal signup-modal modal-container" ng-show="signupObj.visible" ng-click="doNothing()" stop-event>
+              <div class="info-header">
+                <div class="title">Signup</div>
+                <div class="subtitle">Please signup to buy and sell on MBooks. Or <span class="link" ng-click="showLoginModal()">login</span> if you're already a member.</div>
+              </div>
+
+              <form class="info-content" ng-submit="signupUser()">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="label">First Name</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="signupObj.firstName" />
+                    </div>
+
+                    <div class="label">Last Name</div>
+                    <div class="input-holder">
+                      <input type="text" ng-model="signupObj.lastName" />
+                    </div>
+
+                    <div class="label">Phone Number (not shared without your permission)</div>
+                    <div class="input-holder">
+                      <input type="text" placeholder="No Dashes" ng-model="signupObj.phone" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="label">E-Mail</div>
+                    <div class="input-holder">
+                      <input type="email" ng-model="signupObj.email" />
+                    </div>
+
+                    <div class="label">Password</div>
+                    <div class="input-holder">
+                      <input type="password" ng-model="signupObj.password" />
+                    </div>
+
+                    <div class="label">Confirm Password</div>
+                    <div class="input-holder">
+                      <input type="password" ng-model="signupObj.confirm" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="input-holder button-holder">
+                      <button type="submit" class="btn btn-block" ng-class="{'btn-primary':!signupObj.signupError, 'btn-danger':signupObj.signupError}" ng-click="signupUser()">
+                        <span ng-if="!signupObj.isSigningUp && !signupObj.signupError">Signup</span>
+                        <span ng-if="signupObj.isSigningUp">Signing Up...</span>
+                        <span ng-if="signupObj.signupError">{{signupObj.signupError}}</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </footer> -->
+    </div>
   </body>
 </html>

@@ -9,22 +9,153 @@ angular.module("about/about.tpl.html", []).run(["$templateCache", function($temp
 
 angular.module("account/account.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("account/account.tpl.html",
-    "<div class=\"about-page\">\n" +
-    "	About us!\n" +
+    "<div class=\"account-page\">\n" +
+    "	<div class=\"jumbotron\">\n" +
+    "    <div class=\"overlay\"></div>\n" +
+    "    \n" +
+    "    <div class=\"table-layout\">\n" +
+    "      <div class=\"cell\">\n" +
+    "        <div class=\"container\">\n" +
+    "          <div class=\"row\">\n" +
+    "            <div class=\"col-md-12 col-sm-12\">\n" +
+    "              <h1>Account</h1>\n" +
+    "          \n" +
+    "              <p>\n" +
+    "              	Use this page to update your personal details and manage the books you are selling or have sold.\n" +
+    "              </p>\n" +
+    "            </div>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div class=\"main-content\">\n" +
+    "  	<div class=\"container\">\n" +
+    "  		<div class=\"row\">\n" +
+    "  			<div class=\"col-md-8 col-md-offset-2\">\n" +
+    "			  	<div class=\"info-card\">\n" +
+    "			  		<div class=\"info-header\">\n" +
+    "			  			<div class=\"title\">Update Profile</div>\n" +
+    "			  			<div class=\"subtitle\">Feel free to update any personal information whenever you want. <strong>Remember</strong>, we don't share your phone number with anyone.</div>\n" +
+    "			  		</div>\n" +
+    "\n" +
+    "			  		<form class=\"info-content\" ng-submit=\"updateUser()\">\n" +
+    "			        <div class=\"label\">First Name</div>\n" +
+    "			        <div class=\"input-holder\">\n" +
+    "			          <input type=\"text\" ng-model=\"userObj.firstName\" />\n" +
+    "			        </div>\n" +
+    "\n" +
+    "			        <div class=\"label\">Last Name</div>\n" +
+    "			        <div class=\"input-holder\">\n" +
+    "			          <input type=\"text\" ng-model=\"userObj.lastName\" />\n" +
+    "			        </div>\n" +
+    "\n" +
+    "			        <div class=\"label\">Phone Number</div>\n" +
+    "			        <div class=\"input-holder\">\n" +
+    "			          <input type=\"text\" placeholder=\"No Dashes\" ng-model=\"userObj.phone\" />\n" +
+    "			        </div>\n" +
+    "\n" +
+    "			        <div class=\"label\">E-Mail</div>\n" +
+    "			        <div class=\"input-holder\">\n" +
+    "			          <input type=\"email\" ng-model=\"userObj.email\" />\n" +
+    "			        </div>\n" +
+    "\n" +
+    "			        <div class=\"input-holder button-holder\">\n" +
+    "			          <button type=\"submit\" class=\"btn btn-block\" ng-class=\"{'btn-primary':!userObj.updateError, 'btn-danger':userObj.updateError, 'btn-success':userObj.updated}\" ng-click=\"updateUser()\">\n" +
+    "			            <span ng-if=\"!userObj.isUpdating && !userObj.updateError && !userObj.updated\">Save</span>\n" +
+    "			            <span ng-if=\"userObj.isUpdating\">Updating...</span>\n" +
+    "			            <span ng-if=\"userObj.updateError\">{{userObj.updateError}}</span>\n" +
+    "			            <span ng-if=\"userObj.updated\">Updated</span>\n" +
+    "			          </button>\n" +
+    "			        </div>\n" +
+    "			      </form>\n" +
+    "			  	</div>\n" +
+    "\n" +
+    "			  	<div class=\"info-card\">\n" +
+    "			  		<div class=\"info-header\">\n" +
+    "			  			<div class=\"title\">Books Selling</div>\n" +
+    "			  			<div class=\"subtitle\">Feel free to update the books you are selling and remember to mark them as sold!</div>\n" +
+    "			  		</div>\n" +
+    "\n" +
+    "			  		<div class=\"info-content\" style=\"padding: 0 15px;\">\n" +
+    "			  			<div class=\"text\" ng-if=\"!booksObj.sellingResults.length && !booksObj.isLoading && !booksObj.errorLoading\">You haven't started selling books yet! Get started now by <a ng-click=\"showSellModal()\">clicking here</a>.</div>\n" +
+    "\n" +
+    "			  			<div class=\"text loading-text\" ng-if=\"booksObj.isLoading && !booksObj.errorLoading\">\n" +
+    "					      <i class=\"fa fa-spinner fa-spin\"></i>\n" +
+    "			  			</div>\n" +
+    "\n" +
+    "			  			<div class=\"text\" ng-if=\"booksObj.errorLoading\">\n" +
+    "			  				Ahhh. There was an error in loading your books data. Click <a ng-click=\"loadSellingHistory()\">here</a> to try again or email us at <a href=\"mailto:prateeks@umich.edu\">prateeks@umich.edu</a> for immediate help.\n" +
+    "		  				</div>\n" +
+    "\n" +
+    "			  			<div class=\"book-list\" ng-if=\"!booksObj.isLoading && !booksObj.errorLoading && booksObj.sellingResults.length\">\n" +
+    "			  				<div class=\"book-item\" ng-repeat=\"book in booksObj.sellingResults\">\n" +
+    "			  					<div class=\"book-content\">\n" +
+    "			  						<div class=\"title\">{{book.get('name')}}</div>\n" +
+    "			  						<div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
+    "			  						<div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "			  					</div>\n" +
+    "			  					<div class=\"book-buttons\">\n" +
+    "			  						<div class=\"table-layout\">\n" +
+    "			  							<div class=\"cell\">\n" +
+    "				  							<button class=\"btn btn-block btn-primary\" ng-click=\"editBook(book)\">Edit</button>\n" +
+    "				  							<button class=\"btn btn-block btn-danger\" ng-click=\"markAsSold(book)\">\n" +
+    "				  								Sold\n" +
+    "			  								</button>\n" +
+    "				  						</div>\n" +
+    "				  					</div>\n" +
+    "			  					</div>\n" +
+    "			  				</div>\n" +
+    "			  			</div>\n" +
+    "		  			</div>\n" +
+    "		  		</div>\n" +
+    "\n" +
+    "		  		<div class=\"info-card\" ng-if=\"booksObj.soldResults.length && !booksObj.isLoading && !booksObj.errorLoading\">\n" +
+    "			  		<div class=\"info-header\">\n" +
+    "			  			<div class=\"title\">Books Sold</div>\n" +
+    "			  		</div>\n" +
+    "\n" +
+    "		  			<div class=\"info-content\" style=\"padding: 0 15px;\">\n" +
+    "			  			<div class=\"book-list\" ng-if=\"booksObj.soldResults.length\">\n" +
+    "			  				<div class=\"book-item\" ng-repeat=\"book in booksObj.soldResults\">\n" +
+    "			  					<div class=\"book-content\">\n" +
+    "			  						<div class=\"title\">{{book.get('name')}}</div>\n" +
+    "			  						<div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
+    "			  						<div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "			  					</div>\n" +
+    "			  					<div class=\"book-buttons\">\n" +
+    "			  						<div class=\"table-layout\">\n" +
+    "			  							<div class=\"cell\">\n" +
+    "				  							<button class=\"btn btn-block btn-danger\" ng-click=\"markAsUnsold(book)\">Re-List</button>\n" +
+    "				  						</div>\n" +
+    "				  					</div>\n" +
+    "			  					</div>\n" +
+    "			  				</div>\n" +
+    "			  			</div>\n" +
+    "		  			</div>\n" +
+    "		  		</div>\n" +
+    "\n" +
+    "			  	</div>\n" +
+    "		  	</div>\n" +
+    "	  	</div>\n" +
+    "  	</div>\n" +
     "</div>");
 }]);
 
 angular.module("home/home.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("home/home.tpl.html",
-    "<div class=\"close-container animate-if\" ng-show=\"showModal\" ng-click=\"hideSuperModal()\">\n" +
+    "<div class=\"close-container animate-if\" ng-show=\"bookModal.visible\" ng-click=\"hideModal()\">\n" +
     "  <i class=\"fa fa-times\"></i>\n" +
     "</div>\n" +
     "\n" +
-    "<div class=\"modal-overlay animate-if\" ng-show=\"showModal\" ng-click=\"hideSuperModal()\">\n" +
+    "<div class=\"modal-overlay animate-if\" ng-show=\"bookModal.visible\" ng-click=\"hideModal()\">\n" +
     "  <div class=\"table-layout\">\n" +
     "    <div class=\"cell\">\n" +
-    "      <div class=\"view-book-modal modal-container\" ng-show=\"bookModal.visible\" ng-click=\"doNothing()\" stop-event>\n" +
-    "        <div class=\"book-picture\" back-img=\"{{bookModal.selectedBook.get('picture').url()}}\"></div>\n" +
+    "      <div class=\"view-book-modal modal-container\" ng-click=\"doNothing()\" stop-event>\n" +
+    "        <div class=\"book-picture\">\n" +
+    "          <img src=\"{{bookModal.selectedBook.get('picture').url()}}\" />\n" +
+    "        </div>\n" +
     "\n" +
     "        <div class=\"book-info\">\n" +
     "          <div class=\"info-header\">\n" +
@@ -33,152 +164,16 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "          </div>\n" +
     "\n" +
     "          <div class=\"info-content\">\n" +
-    "            <div class=\"text\">ISBN: {{bookModal.selectedBook.get('ISBN')}}</div>\n" +
-    "            <div class=\"text\">Condition: {{bookModal.selectedBook.get('condition')}}</div>\n" +
-    "            <div class=\"text\">Price: ${{bookModal.selectedBook.get('price')}}</div>\n" +
+    "            <div class=\"text\"><span class=\"label-item\">ISBN:</span> {{bookModal.selectedBook.get('ISBN')}}</div>\n" +
+    "            <div class=\"text\"><span class=\"label-item\">Condition:</span> {{bookModal.selectedBook.get('condition')}}</div>\n" +
+    "            <div class=\"text\"><span class=\"label-item\">Price:</span> ${{bookModal.selectedBook.get('price')}}</div>\n" +
     "            <div class=\"text\" ng-if=\"bookModal.selectedBook.get('notes')\">Notes: {{bookModal.selectedBook.get('notes')}}</div>\n" +
     "          </div>\n" +
     "\n" +
-    "          <div class=\"info-footer\">\n" +
-    "            <button class=\"btn btn-primary btn-lg btn-block\" ng-click=\"contactSeller()\">Inquire About Book</button>\n" +
+    "          <div class=\"buy-button\">\n" +
+    "            <button class=\"btn btn-block {{bookModal.buttonColor}}\" ng-click=\"contactSeller()\">{{bookModal.buttonText}}</button>\n" +
     "          </div>\n" +
     "        </div>\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"input-modal sell-book-modal modal-container\" ng-show=\"sellObj.visible\" ng-click=\"doNothing()\" stop-event>\n" +
-    "        <div class=\"info-header\">\n" +
-    "          <div class=\"title\">Sell Book</div>\n" +
-    "          <div class=\"subtitle\">Please fill out all required* fields to sell a book. When someone is interested, we will send you an email and you can initiate the conversation.</div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <form class=\"info-content\" ng-submit=\"addBook()\">\n" +
-    "          <div class=\"label\">Book Name*</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"sellObj.bookName\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Picture URL (Use stock photo from Google or Amazon)</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" placeholder=\"We approve each picture so don't get any ideas!\" ng-model=\"sellObj.pictureUrl\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">ISBN*</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"sellObj.ISBN\" placeholder=\"Back of the book!\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Edition*</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"sellObj.edition\" placeholder=\"Numbers only. Use '1' if no edition.\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Course Name*</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"sellObj.courseName\" placeholder=\"EECS 203, MATH 214, etc.\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">When was the course taken?*</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"sellObj.courseTaken\" placeholder=\"Winter 2013, Fall 2015, etc.\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Price*</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"sellObj.price\" placeholder=\"Just numbers please\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Condition*</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"sellObj.condition\" placeholder=\"New, Like New, Used, Acceptable, Worn\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Notes</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"sellObj.notes\" placeholder=\"\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"input-holder button-holder\">\n" +
-    "            <button type=\"submit\" class=\"btn btn-block\" ng-class=\"{'btn-primary':!sellObj.addingError, 'btn-danger':sellObj.addingError}\" ng-click=\"addBook()\">\n" +
-    "              <span ng-if=\"!sellObj.isAdding && !sellObj.addingError\">Add Book</span>\n" +
-    "              <span ng-if=\"sellObj.isAdding\">Adding...</span>\n" +
-    "              <span ng-if=\"sellObj.addingError\">{{sellObj.addingError}}</span>\n" +
-    "            </button>\n" +
-    "          </div>\n" +
-    "        </form>\n" +
-    "      </div>\n" +
-    "      \n" +
-    "      <div class=\"input-modal login-modal modal-container\" ng-show=\"loginObj.visible\" ng-click=\"doNothing()\" stop-event>\n" +
-    "        <div class=\"info-header\">\n" +
-    "          <div class=\"title\">Login</div>\n" +
-    "          <div class=\"subtitle\">Please login to buy and sell on MBooks. Or <span class=\"link\" ng-click=\"showSignupModal()\">signup</span> if you're not a member yet.</div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <form class=\"info-content\" ng-submit=\"loginUser()\">\n" +
-    "          <div class=\"label\">E-Mail</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"email\" ng-model=\"loginObj.email\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Password</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"password\" ng-model=\"loginObj.password\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"input-holder button-holder\">\n" +
-    "            <button type=\"submit\" class=\"btn btn-block\" ng-class=\"{'btn-primary':!loginObj.loginError, 'btn-danger':loginObj.loginError}\" ng-click=\"loginUser()\">\n" +
-    "              <span ng-if=\"!loginObj.isLoggingIn && !loginObj.loginError\">Login</span>\n" +
-    "              <span ng-if=\"loginObj.isLoggingIn\">Logging In...</span>\n" +
-    "              <span ng-if=\"loginObj.loginError\">{{loginObj.loginError}}</span>\n" +
-    "            </button>\n" +
-    "          </div>\n" +
-    "        </form>\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <div class=\"input-modal signup-modal modal-container\" ng-show=\"signupObj.visible\" ng-click=\"doNothing()\" stop-event>\n" +
-    "        <div class=\"info-header\">\n" +
-    "          <div class=\"title\">Signup</div>\n" +
-    "          <div class=\"subtitle\">Please signup to buy and sell on MBooks. Or <span class=\"link\" ng-click=\"showLoginModal()\">login</span> if you're already a member.</div>\n" +
-    "        </div>\n" +
-    "\n" +
-    "        <form class=\"info-content\" ng-submit=\"signupUser()\">\n" +
-    "          <div class=\"label\">First Name</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"signupObj.firstName\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Last Name</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" ng-model=\"signupObj.lastName\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Phone Number (not shared without your permission)</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"text\" placeholder=\"No Dashes\" ng-model=\"signupObj.phone\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">E-Mail</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"email\" ng-model=\"signupObj.email\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Password</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"password\" ng-model=\"signupObj.password\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"label\">Confirm Password</div>\n" +
-    "          <div class=\"input-holder\">\n" +
-    "            <input type=\"password\" ng-model=\"signupObj.confirm\" />\n" +
-    "          </div>\n" +
-    "\n" +
-    "          <div class=\"input-holder button-holder\">\n" +
-    "            <button type=\"submit\" class=\"btn btn-block\" ng-class=\"{'btn-primary':!signupObj.signupError, 'btn-danger':signupObj.signupError}\" ng-click=\"loginUser()\">\n" +
-    "              <span ng-if=\"!signupObj.isSigningUp && !signupObj.signupError\">Signup</span>\n" +
-    "              <span ng-if=\"signupObj.isSigningUp\">Signing Up...</span>\n" +
-    "              <span ng-if=\"signupObj.signupError\">{{signupObj.signupError}}</span>\n" +
-    "            </button>\n" +
-    "          </div>\n" +
-    "        </form>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -230,7 +225,21 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "      <i class=\"fa fa-spinner fa-spin\"></i>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"book-cards animate-if\" ng-show=\"searchBooksObj.visible && searchBooksObj.results.length && !searchBooksObj.isLoading\">\n" +
+    "    <div class=\"loading-container error-container animate-if\" ng-show=\"searchBooksObj.errorLoading || recentBooksObj.errorLoading\">\n" +
+    "      <div class=\"text\">Ahhh. There was an error in loading your books data. Click <a ng-click=\"loadSectionContent()\">here</a> to try again or email us at <a href=\"mailto:prateeks@umich.edu\">prateeks@umich.edu</a> for immediate help.</div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"loading-container error-container animate-if\" ng-show=\"searchBooksObj.visible && !searchBooksObj.results.length && !searchBooksObj.isLoading\">\n" +
+    "      <i class=\"fa fa-frown-o\"></i>\n" +
+    "      <div class=\"text\">There were no search results for your query... Please check your spelling!</div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"loading-container error-container animate-if\" ng-show=\"recentBooksObj.visible && !recentBooksObj.results.length && !recentBooksObj.isLoading\">\n" +
+    "      <i class=\"fa fa-frown-o\"></i>\n" +
+    "      <div class=\"text\">There are currently no books in our database. Please try again later!</div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"book-cards animate-if\" ng-show=\"searchBooksObj.visible && searchBooksObj.results.length && !searchBooksObj.isLoading && !searchBooksObj.errorLoading\">\n" +
     "      <div class=\"container\">\n" +
     "        <div class=\"row\">  \n" +
     "          <div class=\"col-md-3 col-sm-6 col-xs-12\" ng-repeat=\"book in searchBooksObj.results\">\n" +
@@ -244,40 +253,11 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "                    </div>\n" +
     "                  </div>\n" +
     "                </div>\n" +
-    "                <div class=\"picture\" ng-if=\"book.get('picture')\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
-    "                <div class=\"picture sad-face table-layout\" ng-if=\"!book.get('picture')\">\n" +
-    "                  <div class=\"cell\">\n" +
-    "                    <i class=\"fa fa-frown-o\"></i>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
     "\n" +
-    "              <div class=\"info-holder\">\n" +
-    "                <div class=\"title\">{{book.get('name')}}</div>\n" +
-    "                <div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
-    "                <div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"book-cards animate-if\" ng-show=\"recentBooksObj.visible && recentBooksObj.results.length && !recentBooksObj.isLoading\">\n" +
-    "      <div class=\"container\">\n" +
-    "        <div class=\"row\">  \n" +
-    "          <div class=\"col-md-3 col-sm-6 col-xs-12 animate-if\" ng-repeat=\"book in recentBooksObj.results\">\n" +
-    "            <div class=\"book-card\" ng-click=\"showBookModal(book)\">\n" +
-    "              <div class=\"picture-holder\">\n" +
-    "                <div class=\"picture-overlay\">\n" +
-    "                  <div class=\"table-layout\">\n" +
-    "                    <div class=\"cell\">\n" +
-    "                      <div class=\"title\">${{book.get('price')}}</div>\n" +
-    "                      <div class=\"tip\">{{book.get('numViews')}} Views Today</div>\n" +
-    "                    </div>\n" +
-    "                  </div>\n" +
+    "                <div class=\"picture\" ng-if=\"book.get('picture')\">\n" +
+    "                  <img ng-src=\"{{book.get('picture').url()}}\" />\n" +
     "                </div>\n" +
-    "                <div class=\"picture\" ng-if=\"book.get('picture')\" back-img=\"{{book.get('picture').url()}}\"></div>\n" +
+    "                \n" +
     "                <div class=\"picture sad-face table-layout\" ng-if=\"!book.get('picture')\">\n" +
     "                  <div class=\"cell\">\n" +
     "                    <i class=\"fa fa-exclamation-circle\"></i>\n" +
@@ -287,9 +267,51 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "              </div>\n" +
     "\n" +
     "              <div class=\"info-holder\">\n" +
-    "                <div class=\"title\">{{book.get('name')}}</div>\n" +
-    "                <div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
-    "                <div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "                <div class=\"padded-holder\">\n" +
+    "                  <div class=\"title\">{{truncatedBookname(book.get('name'))}}</div>\n" +
+    "                  <div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
+    "                  <div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "                </div>\n" +
+    "              </div>\n" +
+    "            </div>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"book-cards animate-if\" ng-show=\"recentBooksObj.visible && recentBooksObj.results.length && !recentBooksObj.isLoading && !recentBooksObj.errorLoading\">\n" +
+    "      <div class=\"container\">\n" +
+    "        <div class=\"row\">  \n" +
+    "          <div class=\"col-md-3 col-sm-6 col-xs-12 animate-if\" ng-repeat=\"book in recentBooksObj.results\">\n" +
+    "            <div class=\"book-card\" ng-click=\"showBookModal(book)\">\n" +
+    "              <div class=\"picture-holder\">\n" +
+    "                <div class=\"picture-overlay\">\n" +
+    "                  <div class=\"table-layout\">\n" +
+    "                    <div class=\"cell\">\n" +
+    "                      <div class=\"title\">${{book.get('price')}}</div>\n" +
+    "                      <div class=\"tip\">{{book.get('numViews')}} Views</div>\n" +
+    "                    </div>\n" +
+    "                  </div>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div class=\"picture\" ng-if=\"book.get('picture')\">\n" +
+    "                  <img ng-src=\"{{book.get('picture').url()}}\" />\n" +
+    "                </div>\n" +
+    "                \n" +
+    "                <div class=\"picture sad-face table-layout\" ng-if=\"!book.get('picture')\">\n" +
+    "                  <div class=\"cell\">\n" +
+    "                    <i class=\"fa fa-exclamation-circle\"></i>\n" +
+    "                    <div class=\"text\">No Image Yet</div>\n" +
+    "                  </div>\n" +
+    "                </div>\n" +
+    "              </div>\n" +
+    "\n" +
+    "              <div class=\"info-holder\">\n" +
+    "                <div class=\"padded-holder\">\n" +
+    "                  <div class=\"title\">{{truncatedBookname(book.get('name'))}}</div>\n" +
+    "                  <div class=\"subtitle\">{{book.get('courseName')}} ({{book.get('courseTaken')}})</div>\n" +
+    "                  <div class=\"tip\">{{book.get('condition')}} &bull; {{getBookPostedDate(book)}}</div>\n" +
+    "                </div>\n" +
     "              </div>\n" +
     "            </div>\n" +
     "          </div>\n" +

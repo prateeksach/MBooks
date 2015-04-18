@@ -5839,11 +5839,13 @@ a {
   cursor: pointer;
 }
 button,
-input {
+input,
+textarea {
   border: none !important;
 }
 button:focus,
-input:focus {
+input:focus,
+textarea:focus {
   outline: none !important;
   border: none !important;
   box-shadow: none !important;
@@ -5947,10 +5949,22 @@ input:focus {
   padding: 100px 50px;
   text-align: center;
   z-index: 90;
+  height: 416px;
 }
 .home-page .content-container .loading-container .fa {
   font-size: 80px;
   line-height: 100%;
+}
+.home-page .content-container .loading-container.error-container .text {
+  font-size: 20px;
+  line-height: 25px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.home-page .content-container .loading-container.error-container .fa {
+  font-size: 100px;
+  line-height: 100%;
+  margin-bottom: 10px;
 }
 .home-page .content-container .book-cards {
   padding-top: 30px;
@@ -5971,14 +5985,16 @@ input:focus {
   position: relative;
   z-index: 0;
   cursor: pointer;
-  height: 400px;
   margin-bottom: 30px;
+  display: table;
+  table-layout: fixed;
+  height: 416px;
 }
 .home-page .content-container .book-cards .book-card .picture-holder {
   background: #EFEFEF;
-  height: 305px;
   position: relative;
-  z-index: -1;
+  display: table-row;
+  max-height: 305px;
 }
 .home-page .content-container .book-cards .book-card .picture-holder .picture-overlay {
   position: absolute;
@@ -6013,11 +6029,11 @@ input:focus {
   opacity: 1;
 }
 .home-page .content-container .book-cards .book-card .picture-holder .picture {
-  height: 100%;
   width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+}
+.home-page .content-container .book-cards .book-card .picture-holder .picture img {
+  width: 100%;
+  height: 300px;
 }
 .home-page .content-container .book-cards .book-card .picture-holder .picture.sad-face {
   text-align: center;
@@ -6035,28 +6051,30 @@ input:focus {
   color: #BBB;
 }
 .home-page .content-container .book-cards .book-card .info-holder {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 15px;
   background: #FFF;
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   -o-box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  display: table-row;
+  height: auto;
 }
-.home-page .content-container .book-cards .book-card .info-holder .title {
+.home-page .content-container .book-cards .book-card .info-holder .padded-holder {
+  padding: 15px;
+}
+.home-page .content-container .book-cards .book-card .info-holder .padded-holder .title {
   font-size: 18px;
   font-weight: 600;
   line-height: 22px;
+  max-height: 44px;
+  overflow: hidden;
 }
-.home-page .content-container .book-cards .book-card .info-holder .subtitle {
+.home-page .content-container .book-cards .book-card .info-holder .padded-holder .subtitle {
   margin-top: 5px;
   font-size: 15px;
   line-height: 18px;
 }
-.home-page .content-container .book-cards .book-card .info-holder .tip {
+.home-page .content-container .book-cards .book-card .info-holder .padded-holder .tip {
   margin-top: 5px;
   color: #AAA;
   font-size: 12px;
@@ -6088,73 +6106,84 @@ input:focus {
 }
 .modal-overlay .modal-container {
   margin: 0 auto;
+  border-radius: 4px;
+  overflow: hidden;
 }
 .modal-overlay .modal-container.view-book-modal {
-  height: 100%;
-  max-height: 600px;
-  width: 85%;
-  max-width: 900px;
+  width: 100%;
+  max-width: 300px;
   font-size: 0;
-}
-.modal-overlay .modal-container.view-book-modal > div {
-  display: inline-block;
-  vertical-align: top;
-  width: 50%;
-  height: 100%;
+  position: relative;
 }
 .modal-overlay .modal-container.view-book-modal .book-picture {
-  background-color: #EFEFEF;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  position: relative;
+}
+.modal-overlay .modal-container.view-book-modal .book-picture img {
+  width: 100%;
+  height: auto;
 }
 .modal-overlay .modal-container.view-book-modal .book-info {
   position: relative;
   background: #FFF;
-  border-left: 3px solid #DDD;
-}
-.modal-overlay .modal-container.view-book-modal .book-info .info-header {
-  background: #EFEFEF;
-  padding: 25px;
-  border-bottom: 3px solid #DDD;
+  padding: 15px;
 }
 .modal-overlay .modal-container.view-book-modal .book-info .info-header .title {
-  font-size: 22px;
-  line-height: 26px;
+  font-size: 19px;
+  line-height: 23px;
+  font-weight: 600;
 }
 .modal-overlay .modal-container.view-book-modal .book-info .info-header .subtitle {
-  font-size: 18px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 18px;
   margin-top: 4px;
 }
 .modal-overlay .modal-container.view-book-modal .book-info .info-content {
-  padding: 25px;
+  margin-top: 5px;
 }
 .modal-overlay .modal-container.view-book-modal .book-info .info-content .text {
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 18px;
 }
-.modal-overlay .modal-container.view-book-modal .book-info .info-footer {
-  position: absolute;
-  left: 25px;
-  right: 25px;
-  bottom: 25px;
+.modal-overlay .modal-container.view-book-modal .book-info .info-content .text .label-item {
+  width: 90px;
+  display: inline-block;
+  font-weight: 600;
 }
-.modal-overlay .modal-container.view-book-modal .book-info .info-footer button {
+.modal-overlay .modal-container.view-book-modal .book-info .buy-button {
+  margin-top: 15px;
+}
+.modal-overlay .modal-container.view-book-modal .book-info .buy-button button {
   border-radius: 3px;
+  padding: 7px 12px;
+  -webkit-transition: background;
+  transition: background;
+  -webkit-transition: 0.2s ease-in-out background;
+  -moz-transition: 0.2s ease-in-out background;
+  -ms-transition: 0.2s ease-in-out background;
+  -o-transition: 0.2s ease-in-out background;
+  transition: 0.2s ease-in-out background;
 }
 .modal-overlay .modal-container.input-modal {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   background: #FFF;
 }
-.modal-overlay .modal-container.input-modal.login-modal {
-  height: 373px;
-}
 .modal-overlay .modal-container.input-modal.signup-modal {
-  height: 717px;
+  width: 750px;
+  max-width: 100%;
+}
+.modal-overlay .modal-container.input-modal.signup-modal .info-content .input-holder.button-holder {
+  margin-top: 5px;
 }
 .modal-overlay .modal-container.input-modal.sell-book-modal {
-  height: 995px;
+  width: 750px;
+  max-width: 100%;
+}
+.modal-overlay .modal-container.input-modal.sell-book-modal .info-content {
+  padding-bottom: 5px;
+}
+.modal-overlay .modal-container.input-modal.sell-book-modal .info-content .input-holder.button-holder {
+  margin-top: 5px;
 }
 .modal-overlay .modal-container.input-modal .info-header {
   background: #EFEFEF;
@@ -6189,7 +6218,8 @@ input:focus {
 .modal-overlay .modal-container.input-modal .info-content .input-holder {
   margin-bottom: 10px;
 }
-.modal-overlay .modal-container.input-modal .info-content .input-holder input {
+.modal-overlay .modal-container.input-modal .info-content .input-holder input,
+.modal-overlay .modal-container.input-modal .info-content .input-holder textarea {
   padding: 15px;
   font-size: 14px;
   border-radius: 4px;
@@ -6197,11 +6227,177 @@ input:focus {
   border: 2px solid #DDD !important;
   color: #000;
 }
+.modal-overlay .modal-container.input-modal .info-content .input-holder textarea {
+  height: 72px;
+  resize: none;
+}
 .modal-overlay .modal-container.input-modal .info-content .input-holder.button-holder {
   margin: 0;
   margin-top: 15px;
 }
 .modal-overlay .modal-container.input-modal .info-content .input-holder.button-holder button {
+  padding: 17px 20px;
+  font-size: 18px;
+  line-height: 100%;
+  border-radius: 4px;
+  -webkit-transition: background;
+  transition: background;
+  -webkit-transition: 0.2s ease-in-out background;
+  -moz-transition: 0.2s ease-in-out background;
+  -ms-transition: 0.2s ease-in-out background;
+  -o-transition: 0.2s ease-in-out background;
+  transition: 0.2s ease-in-out background;
+}
+.account-page .jumbotron {
+  background-image: url('images/books.jpg');
+  background-position: center center;
+  background-size: cover;
+  height: 390px;
+  margin: 0;
+  position: relative;
+  color: #FFF;
+  z-index: 0;
+  padding: 30px;
+  padding-top: 80px;
+  text-align: center;
+}
+.account-page .jumbotron h1 {
+  text-transform: uppercase;
+}
+.account-page .jumbotron p {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.account-page .jumbotron .overlay {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+.account-page .info-card {
+  margin: 30px 0;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  border-radius: 4px;
+  background: #FFF;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+  margin-bottom: 30px;
+}
+.account-page .info-card .info-header {
+  background: #F5F5F5;
+  border-bottom: 2px solid #EEE;
+  padding: 25px;
+}
+.account-page .info-card .info-header .title {
+  font-size: 22px;
+  line-height: 26px;
+}
+.account-page .info-card .info-header .subtitle {
+  font-size: 13px;
+  line-height: 17px;
+  margin-top: 4px;
+}
+.account-page .info-card .info-header .subtitle .link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.account-page .info-card .info-content {
+  padding: 15px;
+}
+.account-page .info-card .info-content .text {
+  text-align: center;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 400;
+  color: #000;
+  padding: 25px;
+}
+.account-page .info-card .info-content .text.loading-text .fa {
+  font-size: 40px;
+  line-height: 100%;
+}
+.account-page .info-card .info-content .book-list .book-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #DDD;
+  position: relative;
+}
+.account-page .info-card .info-content .book-list .book-item:last-child {
+  border-bottom: 0;
+}
+.account-page .info-card .info-content .book-list .book-item .book-buttons {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 90px;
+}
+.account-page .info-card .info-content .book-list .book-item .book-buttons .btn {
+  background: transparent;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  font-size: 12px;
+}
+.account-page .info-card .info-content .book-list .book-item .book-buttons .btn.btn-primary {
+  border: 2px solid #428bca !important;
+  color: #245682;
+}
+.account-page .info-card .info-content .book-list .book-item .book-buttons .btn.btn-danger {
+  border: 2px solid #d9534f !important;
+  color: #a02622;
+}
+.account-page .info-card .info-content .book-list .book-item .book-content {
+  padding-right: 120px;
+}
+.account-page .info-card .info-content .book-list .book-item .book-content .title {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 22px;
+}
+.account-page .info-card .info-content .book-list .book-item .book-content .subtitle {
+  margin-top: 5px;
+  font-size: 15px;
+  line-height: 18px;
+}
+.account-page .info-card .info-content .book-list .book-item .book-content .tip {
+  margin-top: 5px;
+  color: #AAA;
+  font-size: 12px;
+  line-height: 14px;
+}
+.account-page .info-card .info-content .label {
+  font-size: 14px;
+  line-height: 100%;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #000;
+  padding: 0;
+  display: block;
+  text-align: left;
+}
+.account-page .info-card .info-content .input-holder {
+  margin-bottom: 10px;
+}
+.account-page .info-card .info-content .input-holder input {
+  padding: 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  width: 100%;
+  border: 2px solid #DDD !important;
+  color: #000;
+}
+.account-page .info-card .info-content .input-holder.button-holder {
+  margin: 0;
+  margin-top: 15px;
+}
+.account-page .info-card .info-content .input-holder.button-holder button {
   padding: 17px 20px;
   font-size: 18px;
   line-height: 100%;
@@ -6222,9 +6418,11 @@ input:focus {
 .navbar.navbar-inverse .navbar-brand {
   height: 60px;
   color: #FFF;
-  padding: 15px 20px;
-  font-size: 25px;
-  line-height: 30px;
+  padding: 12px;
+}
+.navbar.navbar-inverse .navbar-brand img {
+  height: 100%;
+  width: auto;
 }
 .navbar.navbar-inverse .navbar-nav > li {
   padding: 15px;
@@ -6235,6 +6433,15 @@ input:focus {
 }
 .navbar.navbar-inverse .navbar-nav > li.signup-button > a {
   background: #3498db;
+  color: #FFF;
+  border-radius: 3px;
+  padding: 5px 15px;
+}
+.navbar.navbar-inverse .navbar-nav > li.logout-button {
+  padding: 13px;
+}
+.navbar.navbar-inverse .navbar-nav > li.logout-button > a {
+  border: 2px solid #3498db;
   color: #FFF;
   border-radius: 3px;
   padding: 5px 15px;

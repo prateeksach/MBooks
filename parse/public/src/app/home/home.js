@@ -46,7 +46,7 @@ angular.module( 'ngBoilerplate.home', [
 // Home page controller
 .controller( 'HomeCtrl', function HomeController( $scope, $rootScope, $timeout ) {
   // Modal related variables
-  $scope.bookModal = {visible: false, selectedBook: null}
+  $scope.bookModal = {visible: false, selectedBook: null, buttonText:"E-Mail Seller", buttonColor: "btn-primary"}
 
   // Objects for recent books and searching
   $scope.searchBooksObj = {visible: false, query: "", isLoading: false, noResults: false, errorLoading: false, results: []}
@@ -55,6 +55,19 @@ angular.module( 'ngBoilerplate.home', [
   // Empty function to avoid event bubbling
   $scope.doNothing = function() {
 
+  }
+
+  // Load appropriate depending on what's visible
+  $scope.loadSectionContent = function() {
+    if($scope.searchBooksObj.visible)
+      $scope.searchBooks();
+    else
+      $scope.loadRecentBooks();
+  }
+
+  // Truncate name to fit in two lines 
+  $scope.truncatedBookname = function(name) {
+    return name.length > 45 ? removeWhitespace(name.substr(0, 45)) + "..." : name;
   }
 
   // Show all books
@@ -78,22 +91,35 @@ angular.module( 'ngBoilerplate.home', [
     $scope.bookModal.selectedBook = book;
     $scope.bookModal.visible = true;
 
-    $rootScope.showModal = true;
+    // Increment number of views on Parse.
+    Parse.Cloud.run("incrementViews", {bookId: book.id}).then(function() {
+      book.set("numViews", book.get('numViews') + 1);
+    }, function(error) {
+
+    })
   }
 
   // Hide modal
   $scope.hideModal = function() {
-    $rootScope.showModal = false;
-
+    $scope.bookModal.visible = false;
+    $rootScope.bodyScroll = true;
+    
     // Delay before resetting the modal variables to avoid glitches
     $timeout(function() {
-      $scope.bookModal = {visible: false, selectedBook: null}
+      $scope.bookModal = {visible: false, selectedBook: null, buttonText:"E-Mail Seller", buttonColor: "btn-primary"}
     }, 300);
   }
 
   // Contact the seller of the book (requires login)
   $scope.contactSeller = function() {
+    if(!$rootScope.validateUser()) {
+      $scope.bookModal.buttonColor = "btn-danger";
+      $scope.bookModal.buttonText = "Please login or signup first";
+      return;
+    }
 
+    var link = "mailto:" + $scope.bookModal.selectedBook.get("user") + "?subject=MBooks: Interested in your book&body=" + "Hey, I want to buy your " + $scope.bookModal.selectedBook.get("courseName") + " book (" + $scope.bookModal.selectedBook.get("name") + ") for $" + $scope.bookModal.selectedBook.get("price") + ". Is it still available and if so, how can I get it? Thanks!";
+    window.location.href = link;
   }
 
   // Search books
@@ -167,11 +193,6 @@ angular.module( 'ngBoilerplate.home', [
 
   // Load recent books on page load
   $scope.loadRecentBooks();
-
-  // Listen for when modal is hidden from rootScope
-  $scope.$on("modalHidden", function() {
-    $scope.hideModal();
-  })
 })
 
 ;
