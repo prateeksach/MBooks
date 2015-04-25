@@ -10,6 +10,10 @@ function validateEmail(email) {
   return re.test(email);
 }
 
+function removeSpecialChars(str) {
+  return str.replace(/&/g,"and");
+}
+
 function removeWhitespace(str) {
   return str.replace(/^\s+|\s+$/g,'');  
 }
@@ -288,10 +292,10 @@ angular.module( 'ngBoilerplate', [
     // Make Parse request
     Parse.Cloud.run(requestName, params).then(function(book) {
       $scope.sellObj.isAdding = false;
-      $scope.hideSuperModal();
+      // $scope.hideSuperModal();
 
-      $state.go("account");
-      $rootScope.$broadcast("bookAdded")
+      // $state.go("account");
+      // $rootScope.$broadcast("bookAdded")
     }, function(error) {
       $scope.sellObj.isAdding = false;
       $scope.sellObj.addingError = "Request failed... Try again";

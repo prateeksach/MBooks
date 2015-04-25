@@ -118,7 +118,7 @@ angular.module( 'ngBoilerplate.home', [
       return;
     }
 
-    var link = "mailto:" + $scope.bookModal.selectedBook.get("user") + "?subject=MBooks: Interested in your book&body=" + "Hey, I want to buy your " + $scope.bookModal.selectedBook.get("courseName") + " book (" + $scope.bookModal.selectedBook.get("name") + ") for $" + $scope.bookModal.selectedBook.get("price") + ". Is it still available and if so, how can I get it? Thanks!";
+    var link = "mailto:" + $scope.bookModal.selectedBook.get("user") + "?subject=MBooks: Interested in your book&body=" + "Hey, I want to buy your " + $scope.bookModal.selectedBook.get("courseName") + " book (" + removeSpecialChars($scope.bookModal.selectedBook.get("name")) + ") for $" + $scope.bookModal.selectedBook.get("price") + ". Is it still available and if so, how can I get it? Thanks!";
     window.location.href = link;
   }
 
